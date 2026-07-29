@@ -56,8 +56,10 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Publish to Modrinth
+        if: ${{ vars.MODRINTH_ID != '' }}
         uses: Kir-Antipov/mc-publish@v3
         with:
+          fail-mode: warn
           modrinth-id: ${{ vars.MODRINTH_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: |

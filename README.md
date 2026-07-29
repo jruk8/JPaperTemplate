@@ -29,5 +29,6 @@ On Windows:
 .\gradlew.bat build
 ```
 
-The plugin jar is written to `build/libs/`. The included GitHub Actions workflow
-runs the same build for pushes and pull requests.
+The plugin jar is written to `build/libs/`. The included publish workflow
+triggers on every `v*` tagged commit. It publishes a release on GitHub and
+Modrinth (only if the `MODRINTH` repo variables are set).
