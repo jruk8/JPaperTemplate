@@ -5,8 +5,10 @@ import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Header;
 import eu.okaeri.configs.annotation.Comment;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @SuppressWarnings("FieldMayBeFinal")
 @Header({
         "################################",

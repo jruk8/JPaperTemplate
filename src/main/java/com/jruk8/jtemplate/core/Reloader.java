@@ -32,6 +32,15 @@ public final class Reloader {
     }
 
     /**
+     * Returns the list of registered reloadables.
+     *
+     * @return an unmodifiable view of the registered reloadables
+     */
+    public List<Reloadable> getReloadables() {
+        return reloadables;
+    }
+
+    /**
      * Reloads all registered components.
      * <p>
      * A single failure is logged and tracked, but will not prevent

@@ -11,9 +11,12 @@ repositories {
         name = 'placeholderapi'
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
     }
+    maven {
+        name = 'codemc'
+        url = 'https://repo.codemc.org/repository/maven-public/'
+    }
 }
 
-// 3. Add your Okaeri dependencies
 dependencies {
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.46'
@@ -33,4 +36,9 @@ dependencies {
 
     // PlaceholderAPI
     compileOnly 'me.clip:placeholderapi:2.11.6'
+
+    // Testing
+    testImplementation 'org.mockito:mockito-core:5.23.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.23.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.21:3.133.2'
 }
