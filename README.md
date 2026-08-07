@@ -8,7 +8,7 @@ features.
 
 1. Create a repository from this template.
 2. Update the plugin values in `gradle.properties`.
-3. Rename the example package and `PaperTemplatePlugin` class to match the
+3. Rename the example package and `JTemplatePlugin` class to match the
    `pluginMain` value.
 4. Change `rootProject.name` in `settings.gradle`.
 5. Add your plugin code and metadata. Commands and permissions belong in

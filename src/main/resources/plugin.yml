@@ -4,3 +4,6 @@ main: ${main}
 api-version: "${apiVersion}"
 author: ${author}
 description: ${description}
+website: ${website}
+softdepend:
+  - PlaceholderAPI

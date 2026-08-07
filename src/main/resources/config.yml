@@ -1,0 +1,5 @@
+# Configures which format to use for messages.
+#
+# Supported values: minimessage, legacy
+# Default: minimessage
+messages-format: minimessage
