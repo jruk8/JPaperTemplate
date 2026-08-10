@@ -1,4 +1,4 @@
-![JManhunt banner](docs/assets/banner-1280x640.png)
+![Banner](docs/assets/banner-1280x640.png)
 # Paper plugin template
 
 A minimal, buildable starting point for Paper plugins using Gradle and Java 25.
