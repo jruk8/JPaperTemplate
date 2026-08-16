@@ -8,4 +8,4 @@ on:
 
 jobs:
   build:
-    uses: jruk8/plugin-conventions/.github/workflows/build.yml@v1.3.7
+    uses: jruk8/plugin-conventions/.github/workflows/build.yml@v1.3.9
