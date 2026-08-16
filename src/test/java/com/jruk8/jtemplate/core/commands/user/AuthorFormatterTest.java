@@ -1,7 +1,9 @@
 package com.jruk8.jtemplate.core.commands.user;
 
 import com.jruk8.jtemplate.core.commands.user.authors.AuthorFormatter;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
