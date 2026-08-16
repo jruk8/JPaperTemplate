@@ -1,5 +1,7 @@
 package com.jruk8.jtemplate.core;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,6 +13,7 @@ import java.util.logging.Logger;
  */
 public final class Reloader {
 
+    @Getter
     private final List<Reloadable> reloadables = new ArrayList<>();
     private final Logger logger;
 
@@ -29,15 +32,6 @@ public final class Reloader {
             reloadables.add(reloadable);
         }
         return this;
-    }
-
-    /**
-     * Returns the list of registered reloadables.
-     *
-     * @return an unmodifiable view of the registered reloadables
-     */
-    public List<Reloadable> getReloadables() {
-        return reloadables;
     }
 
     /**

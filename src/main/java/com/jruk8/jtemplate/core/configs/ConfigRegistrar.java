@@ -2,22 +2,29 @@ package com.jruk8.jtemplate.core.configs;
 
 import com.jruk8.jtemplate.core.Bootstrap;
 import com.jruk8.jtemplate.core.Reloadable;
-import com.jruk8.jtemplate.core.messages.MessageConfig;
+import com.jruk8.jtemplate.core.messages.MessagesConfig;
+import com.jruk8.jtemplate.core.sounds.SoundsConfig;
 import eu.okaeri.configs.ConfigManager;
+import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.yaml.bukkit.YamlBukkitConfigurer;
 import eu.okaeri.configs.yaml.bukkit.serdes.SerdesBukkit;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.List;
 
 public class ConfigRegistrar implements Bootstrap, Reloadable {
 
     @Getter
     private PluginConfig pluginConfig;
     @Getter
-    private MessageConfig messagesConfig;
+    private MessagesConfig messagesConfig;
+    @Getter
+    private SoundsConfig soundsConfig;
     private final JavaPlugin plugin;
+
+    private List<OkaeriConfig> configs;
 
     public ConfigRegistrar(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -25,32 +32,32 @@ public class ConfigRegistrar implements Bootstrap, Reloadable {
 
     @Override
     public void register() {
-        // Load plugin config
-        this.pluginConfig = ConfigManager.create(PluginConfig.class, it -> {
-            it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-            it.withBindFile(new File(plugin.getDataFolder(), "config.yml"));
-            it.withRemoveOrphans(true);
-            it.saveDefaults();
-            it.load(true);
-        });
+        this.pluginConfig = createConfig(PluginConfig.class, "config.yml");
+        this.messagesConfig = createConfig(MessagesConfig.class, "messages.yml");
+        this.soundsConfig = createConfig(SoundsConfig.class, "sounds.yml");
 
-        // Load messages
-        this.messagesConfig = ConfigManager.create(MessageConfig.class, it -> {
-            it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
-            it.withBindFile(new File(plugin.getDataFolder(), "messages.yml"));
-            it.withRemoveOrphans(true);
-            it.saveDefaults();
-            it.load(true);
-        });
+        this.configs = List.of(this.pluginConfig, this.messagesConfig, this.soundsConfig);
     }
 
     @Override
     public void reload() {
-        if (this.pluginConfig != null) {
-            this.pluginConfig.load(true);
+        if (this.configs == null) {
+            return;
         }
-        if (this.messagesConfig != null) {
-            this.messagesConfig.load(true);
-        }
+        this.configs.forEach(ConfigRegistrar::saveAndLoad);
+    }
+
+    private <T extends OkaeriConfig> T createConfig(Class<T> configClass, String fileName) {
+        return ConfigManager.create(configClass, it -> {
+            it.withConfigurer(new YamlBukkitConfigurer(), new SerdesBukkit());
+            it.withBindFile(new File(plugin.getDataFolder(), fileName));
+            it.withRemoveOrphans(true);
+            saveAndLoad(it);
+        });
+    }
+
+    private static void saveAndLoad(OkaeriConfig config) {
+        config.saveDefaults();
+        config.load(true);
     }
 }

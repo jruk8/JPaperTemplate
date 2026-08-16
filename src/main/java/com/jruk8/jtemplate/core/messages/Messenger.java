@@ -76,4 +76,16 @@ public final class Messenger {
     public void send(CommandSender sender, String rawMessage) {
         send(sender, rawMessage, Map.of(), new TagResolver[0]);
     }
+
+    public void broadcast(String rawMessage, Map<String, String> stringPlaceholders, TagResolver... resolvers) {
+        if (rawMessage == null || rawMessage.isEmpty()) {
+            return;
+        }
+
+        Component text = messageParser.parse(rawMessage, stringPlaceholders, resolvers);
+        for (CommandSender sender : org.bukkit.Bukkit.getServer().getOnlinePlayers()) {
+            sender.sendMessage(text);
+        }
+        org.bukkit.Bukkit.broadcast(text);
+    }
 }

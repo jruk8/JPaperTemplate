@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.jruk8.plugin-conventions' version 'v1.2.8'
+    id 'com.github.jruk8.plugin-conventions' version 'v1.3.6'
 }
 
 repositories {
@@ -10,10 +10,6 @@ repositories {
     maven {
         name = 'placeholderapi'
         url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/'
-    }
-    maven {
-        name = 'codemc'
-        url = 'https://repo.codemc.org/repository/maven-public/'
     }
 }
 
@@ -31,14 +27,19 @@ dependencies {
     implementation 'eu.okaeri:okaeri-configs-serdes-commons:5.0.13'
 
     // Cloud v2 Command System
-    implementation 'org.incendo:cloud-paper:2.0.0'
-    implementation 'org.incendo:cloud-annotations:2.1.0'
+    implementation platform('org.incendo:cloud-bom:2.0.0')
+    implementation platform('org.incendo:cloud-minecraft-bom:2.0.0')
+
+    implementation 'org.incendo:cloud-annotations'
+    implementation 'org.incendo:cloud-paper'
+    implementation 'org.incendo:cloud-minecraft-extras'
 
     // PlaceholderAPI
     compileOnly 'me.clip:placeholderapi:2.11.6'
+}
 
-    // Testing
-    testImplementation 'org.mockito:mockito-core:5.23.0'
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.23.0'
-    testImplementation 'com.github.seeseemelk:MockBukkit-v1.21:3.133.2'
+tasks.named('shadowJar') {
+    def targetPackage = "${pluginGroup}.libs"
+    relocate 'eu.okaeri', "${targetPackage}.okaeri"
+    relocate 'org.incendo.cloud', "${targetPackage}.cloud"
 }

@@ -18,14 +18,15 @@ import org.junit.jupiter.api.Nested;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MessageParserTest {
 
     private static ServerMock server;
 
     private PluginConfig pluginConfig;
-    private MessageConfig messagesConfig;
+    private MessagesConfig messagesConfig;
     private MessageParser parser;
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     private static final PlainTextComponentSerializer PLAIN_TEXT = PlainTextComponentSerializer.plainText();
@@ -43,7 +44,7 @@ class MessageParserTest {
     @BeforeEach
     void setUp() {
         pluginConfig = new PluginConfig();
-        messagesConfig = new MessageConfig();
+        messagesConfig = new MessagesConfig();
         parser = new MessageParser(pluginConfig, messagesConfig);
     }
 

@@ -13,13 +13,13 @@ import lombok.Setter;
 @Header({
         "################################",
         "#         Plugin Config        #",
-        "################################"
+        "################################",
+        ""
 })
 public class PluginConfig extends OkaeriConfig {
 
     @Comment({
             "Configures which format to use for messages.",
-            "",
             "Supported values: MINIMESSAGE, LEGACY",
             "Default: MINIMESSAGE"
     })

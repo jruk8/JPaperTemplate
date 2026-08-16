@@ -23,9 +23,9 @@ public final class MessageParser {
     private static final LegacyComponentSerializer LEGACY_SERIALIZER = LegacyComponentSerializer.legacyAmpersand();
 
     private final PluginConfig pluginConfig;
-    private final MessageConfig messagesConfig;
+    private final MessagesConfig messagesConfig;
 
-    public MessageParser(PluginConfig pluginConfig, MessageConfig messagesConfig) {
+    public MessageParser(PluginConfig pluginConfig, MessagesConfig messagesConfig) {
         this.pluginConfig = pluginConfig;
         this.messagesConfig = messagesConfig;
     }
