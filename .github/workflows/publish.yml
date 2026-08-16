@@ -7,12 +7,12 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   publish:
     permissions:
       contents: write
       packages: read
-    uses: jruk8/plugin-conventions/.github/workflows/publish.yml@v1.3.6
+    uses: jruk8/plugin-conventions/.github/workflows/publish.yml@v1.3.7
     secrets: inherit
