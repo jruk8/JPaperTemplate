@@ -1,41 +1,47 @@
 # Placeholders
 
-JManhunt provides built-in PlaceholderAPI identifiers. All placeholders must
-be used with the prefix `%jmanhunt_<placeholder>%` (e.g.
-`%jmanhunt_total_kills%`, `%jmanhunt_time_as_hunter%`).
+PlaceholderAPI support is handled by the `core.placeholders` module. When
+PlaceholderAPI is installed and `placeholders.enabled` is true, the plugin
+registers an expansion using the configured `placeholders.identifier`
+(default `jtemplate`). The expansion is re-registered on `/jtemplate reload`
+so config changes apply immediately, and unregistered when the plugin
+disables.
 
-Formatting, aliases, and enabled/disabled state are configured in `config.yml`
-under the `placeholders` section. Values are resolved for the player passed by
-PlaceholderAPI.
-
-## Placeholder List
+## Template Placeholders
 
 | Placeholder | Type | Description |
 | --- | --- | --- |
-| `%jmanhunt_time_as_speedrunner%` | LONG | Career time played as a speedrunner, in milliseconds. |
-| `%jmanhunt_time_as_hunter%` | LONG | Career time played as a hunter, in milliseconds. |
-| `%jmanhunt_formatted_time_as_speedrunner%` | TEXT | Career speedrunner time formatted as days, hours, minutes, seconds. |
-| `%jmanhunt_formatted_time_as_hunter%` | TEXT | Career hunter time formatted as days, hours, minutes, seconds. |
-| `%jmanhunt_total_kills%` | INTEGER | Career total kills. |
-| `%jmanhunt_total_kills_as_hunter%` | INTEGER | Career kills while playing as a hunter. |
-| `%jmanhunt_total_kills_as_speedrunner%` | INTEGER | Career kills while playing as a speedrunner. |
-| `%jmanhunt_total_final_kills%` | INTEGER | Career final kills. |
-| `%jmanhunt_total_damage_dealt%` | DECIMAL | Career damage dealt in hearts. |
-| `%jmanhunt_total_wins_as_hunter%` | INTEGER | Career wins as a hunter. |
-| `%jmanhunt_total_wins_as_speedrunner%` | INTEGER | Career wins as a speedrunner. |
+| `%jtemplate_authors_command_uses%` | INTEGER | Number of times the player has executed `/jtemplate authors`. |
+| `%jtemplate_authors_command_uses_global%` | INTEGER | Server-wide total number of `/jtemplate authors` executions. |
+
+The count is recorded whenever a player runs a command matching
+`placeholders.labels` + `placeholders.command` (e.g. `/jtemplate authors` or
+`/jt authors`). Counts are stored in the SQLite database, so they survive
+restarts and are separate per player.
 
 ## Configuration
 
-Each placeholder can be individually enabled or disabled and formatted in
-`config.yml`:
-
 ```yaml
 placeholders:
-  total_kills:
-    enabled: true
-    format: "{value}"
+  enabled: true
+  identifier: jtemplate
+  command: authors
+  labels:
+    - jtemplate
+    - jt
 ```
 
-The `{value}` placeholder is replaced with the built-in value. Formatting uses
-the selected `text-format` from `config.yml` (either `minimessage` or
-`legacy`).
+## Adding Your Own Placeholders
+
+The intended extension point is `AuthorsCommandUsageExpansion.onRequest()`;
+add a new switch case per placeholder:
+
+```java
+case "my_stat" -> String.valueOf(tracker.playerUses(player.getUniqueId()));
+```
+
+Track new state from anywhere via the injected services:
+`PlaceholdersBootstrap` provides a `CommandUsageTracker` around the shared
+`SqliteStorage`, or use `SqliteStorage` directly with your own stat key. A
+full walkthrough (including new stat keys and listeners) lives in
+[api.md](api.md).

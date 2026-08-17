@@ -1,28 +1,22 @@
 ![Banner](assets/banner-1280x640.png)
-# JManhunt
+# JTemplate
 
-JManhunt is a deeply configurable Paper plugin for 26.2+ Manhunts. It comes
-with a lean world reset engine, compass tracking, placeholders, statistics,
-and a variety of built-in actions and custom modifiers.
+A clean, buildable starting point for Paper plugins: commands (Incendo
+Cloud), okaeri-configs, MiniMessage messaging, sounds, PlaceholderAPI
+placeholders and SQLite storage -- all wired without a DI framework.
 
 ## Key Features
 
-- **Deep configurability** — Toggle built-in mechanics on or off, or create
-  entirely new gameplay through easy-to-use custom modifiers.
-- **World reset engine** — Grid-based single-world manhunt engine with
-  persistent spiral cell assignment and automatic End resets.
-- **Compass tracking** — Hunter compass with configurable refresh and
-  right-click behavior.
-- **Placeholders & statistics** — Career statistics with PlaceholderAPI
-  support.
-- **Built-in challenges** — No-jump, one-heart, and lucky-blocks challenges.
-
-## Installation
-
-Download the latest release from
-[Modrinth](https://modrinth.com/plugin/jmanhunt) and place the jar in your
-server's `plugins/` folder. Restart the server to generate the default
-configuration files.
+- **Small modules** -- one package per concern, each self-contained and easy
+  to delete or extend.
+- **Manual wiring** - a registrar per module (`Bootstrap`) composes services;
+  `JTemplatePlugin` is the single composition root.
+- **Placeholders** - a template PlaceholderAPI expansion counting command
+  executions, with a configurable identifier.
+- **SQLite storage** -- generic per-player / global counters in
+  `jtemplate.db`, driven by the server's bundled JDBC driver.
+- **Reloadable** -- `/jtemplate reload` re-reads every config and re-opens
+  the storage and placeholders.
 
 ## Documentation
 
@@ -31,33 +25,15 @@ configuration files.
 - [Permissions](permissions.md)
 - [Configuration](configuration.md)
 - [Placeholders](placeholders.md)
-- [API](api.md)
+- [Extending the template](api.md)
 
-## Download / Build
+## Build
 
-Pre-built releases are published to
-[Modrinth](https://modrinth.com/plugin/jmanhunt).
+Java 25 is required.
 
-To build from source, Java 25 is required:
-
-```shell
+```text
 ./gradlew build
 ```
 
-On Windows:
-
-```powershell
-.\gradlew.bat build
-```
-
-The plugin jar is written to `build/libs/`.
-
-## Contributing
-
-Contributions are welcome! See
-[CONTRIBUTING.md](https://github.com/jruk8/JManhunt/blob/main/CONTRIBUTING.md)
-for contributor setup and the
-[GitHub repository](https://github.com/jruk8/JManhunt) for issues and pull
-requests.
-
-© 2026 jruk8. Licensed under GNU GPLv3.
+The plugin jar is written to `build/libs/`. See the root
+[README](../README.md) for the "start a new plugin" workflow.

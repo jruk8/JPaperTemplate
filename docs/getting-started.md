@@ -8,64 +8,36 @@
 
 ## Installation
 
-1. Download the latest JManhunt jar from
-   [Modrinth](https://modrinth.com/plugin/jmanhunt).
+1. Build the plugin (`.\gradlew.bat build`) or download a release jar.
 2. Place the jar in your server's `plugins/` folder.
-3. Restart the server. JManhunt will generate its default configuration files
-   in `plugins/JManhunt/`.
+3. Restart the server. The plugin generates `config.yml`, `messages.yml` and
+   `sounds.yml` in `plugins/JTemplate/` and creates the SQLite database
+   `jtemplate.db`.
 4. (Optional) Install [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/)
-   to use JManhunt's placeholders.
+   to use the placeholders.
 
-## Your First Match
-
-1. Assign at least one hunter and one speedrunner:
-
-   ```text
-   /manhunt setplayer <selector> hunter
-   /manhunt setplayer <selector> speedrunner
-   ```
-
-   Selectors such as `@a`, `@p`, and `@a[distance=..10]` are supported.
-
-2. Start the match with `/manhunt start`.
-3. Check the teams at any time with `/manhunt status`.
-4. The match ends when all speedrunners have died, or manually through
-   `/manhunt end`.
-
-Players need `jmanhunt.hunter` or `jmanhunt.speedrunner` to receive the
-corresponding role. Both permissions are granted by default. The `/manhunt`
-command is also accessible through the `mh` alias.
-
-### Quick Start (Convenience for Larger Servers)
-
-For larger servers that want to start a match without manually assigning
-roles, use Quick Start:
+## Your First Commands
 
 ```text
-/manhunt quickstart
+/jtemplate help
+/jtemplate authors
+/jtemplate reload
 ```
 
-This assigns every eligible online player (excluding AFK) as a Hunter,
-randomly chooses one Speedrunner, and immediately starts the game — bypassing
-the autostart system entirely.
+`/jt` is a built-in alias for `/jtemplate`. The template placeholders count
+how often `/jtemplate authors` is executed (per player and globally). Run it a
+couple of times, install PlaceholderAPI, and try
+`%jtemplate_authors_command_uses%` in a scoreboard or chat.
 
-You can also specify a percentage of eligible players to become Speedrunners:
+## Starting a New Plugin from the Template
 
-```text
-/manhunt quickstart 50
-```
-
-With 16 eligible players and `50`, this results in 8 Speedrunners and 8
-Hunters. Fractional results are rounded to the nearest whole player, and there
-is always at least one Speedrunner.
-
-Quick Start can only be used when no match is active. See
-[Commands](commands.md#quick-start) for more details.
+1. Find & replace project-wide: `jtemplate` to *yourname* and `JTemplate` to
+   *YourName* (packages, commands, placeholder identifiers, database name,
+   docs). Then update `gradle.properties` and `settings.gradle`.
+2. Delete or adapt the template modules you do not need; see
+   [Extending the template](api.md) for what plugs in where.
 
 ## Next Steps
-
-After playing a few matches, check out the built-in settings and custom
-modifiers to enhance your experience:
 
 - [Commands](commands.md)
 - [Configuration](configuration.md)
