@@ -1,4 +1,15 @@
 # Changelog
+## [1.1.0] - 2026-08-17
+
+### Features
+
+- Placeholders, storage (db)
+
+
+### Miscellaneous
+
+- Update for v1.0.5 [skip ci]
+
 
 ## [Unreleased]
 
