@@ -83,9 +83,6 @@ public final class Messenger {
         }
 
         Component text = messageParser.parse(rawMessage, stringPlaceholders, resolvers);
-        for (CommandSender sender : org.bukkit.Bukkit.getServer().getOnlinePlayers()) {
-            sender.sendMessage(text);
-        }
         org.bukkit.Bukkit.broadcast(text);
     }
 }
