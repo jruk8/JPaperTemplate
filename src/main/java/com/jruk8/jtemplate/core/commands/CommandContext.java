@@ -4,9 +4,10 @@ import com.jruk8.jtemplate.core.messages.MessagesConfig;
 import com.jruk8.jtemplate.core.messages.Messenger;
 import com.jruk8.jtemplate.core.sounds.SoundPlayer;
 import com.jruk8.jtemplate.core.sounds.SoundsConfig;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.incendo.cloud.paper.util.sender.Source;
 
 /**
  * Bundles the cross-cutting services almost every command class needs for user-facing feedback: config-driven
@@ -14,7 +15,7 @@ import org.incendo.cloud.paper.util.sender.Source;
  * <p>
  * Command classes take a single {@code CommandContext} instead of listing {@code messages}, {@code sounds},
  * {@code messenger}, and {@code soundPlayer} individually — adding a new shared service only requires updating this
- * record and its single construction site in {@link CommandsRegistrar}, not every command class's constructor.
+ * record and its single construction site in {@code JTemplatePlugin}, not every command class's constructor.
  */
 public record CommandContext(
         MessagesConfig messages,
@@ -24,17 +25,34 @@ public record CommandContext(
 ) {
 
     /**
+     * Builds a Brigadier {@code requires} predicate that passes only when the sender holds every listed permission.
+     *
+     * @param permissions the permission nodes the sender must hold
+     * @return a predicate over the command source stack
+     */
+    public static Predicate<CommandSourceStack> requiresPermission(String... permissions) {
+        return source -> {
+            for (String permission : permissions) {
+                if (!source.getSender().hasPermission(permission)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
+    /**
      * Convenience method for sending a message resolved from config and playing a success sound.
      * @param sender The command sender to send the message to and play the sound for.
      * @param messageSelector Function to select the message string from {@link MessagesConfig}.
      * @param resolvers The placeholder resolvers for the message.
      */
     public void success(
-            Source sender,
+            CommandSourceStack sender,
             Function<MessagesConfig, String> messageSelector,
             TagResolver... resolvers
     ) {
-        messenger.send(sender.source(), messageSelector.apply(messages), resolvers);
+        messenger.send(sender.getSender(), messageSelector.apply(messages), resolvers);
         playSuccess(sender);
     }
 
@@ -44,8 +62,8 @@ public record CommandContext(
      * @param rawMessage The raw message to send.
      * @param resolvers The placeholder resolvers for the message.
      */
-    public void success(Source sender, String rawMessage, TagResolver... resolvers) {
-        messenger.send(sender.source(), rawMessage, resolvers);
+    public void success(CommandSourceStack sender, String rawMessage, TagResolver... resolvers) {
+        messenger.send(sender.getSender(), rawMessage, resolvers);
         playSuccess(sender);
     }
 
@@ -56,11 +74,11 @@ public record CommandContext(
      * @param resolvers The placeholder resolvers for the message.
      */
     public void error(
-            Source sender,
+            CommandSourceStack sender,
             Function<MessagesConfig, String> messageSelector,
             TagResolver... resolvers
     ) {
-        messenger.send(sender.source(), messageSelector.apply(messages), resolvers);
+        messenger.send(sender.getSender(), messageSelector.apply(messages), resolvers);
         playError(sender);
     }
 
@@ -70,8 +88,8 @@ public record CommandContext(
      * @param rawMessage The raw message to send.
      * @param resolvers The placeholder resolvers for the message.
      */
-    public void error(Source sender, String rawMessage, TagResolver... resolvers) {
-        messenger.send(sender.source(), rawMessage, resolvers);
+    public void error(CommandSourceStack sender, String rawMessage, TagResolver... resolvers) {
+        messenger.send(sender.getSender(), rawMessage, resolvers);
         playError(sender);
     }
 
@@ -82,11 +100,11 @@ public record CommandContext(
      * @param resolvers The placeholder resolvers for the message.
      */
     public void sendMessage(
-            Source sender,
+            CommandSourceStack sender,
             Function<MessagesConfig, String> messageSelector,
             TagResolver... resolvers
     ) {
-        messenger.send(sender.source(), messageSelector.apply(messages), resolvers);
+        messenger.send(sender.getSender(), messageSelector.apply(messages), resolvers);
     }
 
     /**
@@ -95,15 +113,15 @@ public record CommandContext(
      * @param rawMessage The raw message to send.
      * @param resolvers The placeholder resolvers for the message.
      */
-    public void sendMessage(Source sender, String rawMessage, TagResolver... resolvers) {
-        messenger.send(sender.source(), rawMessage, resolvers);
+    public void sendMessage(CommandSourceStack sender, String rawMessage, TagResolver... resolvers) {
+        messenger.send(sender.getSender(), rawMessage, resolvers);
     }
 
-    public void playSuccess(Source sender) {
-        soundPlayer.play(sender.source(), sounds.getSuccessSound());
+    public void playSuccess(CommandSourceStack sender) {
+        soundPlayer.play(sender.getSender(), sounds.getSuccessSound());
     }
 
-    public void playError(Source sender) {
-        soundPlayer.play(sender.source(), sounds.getErrorSound());
+    public void playError(CommandSourceStack sender) {
+        soundPlayer.play(sender.getSender(), sounds.getErrorSound());
     }
 }
