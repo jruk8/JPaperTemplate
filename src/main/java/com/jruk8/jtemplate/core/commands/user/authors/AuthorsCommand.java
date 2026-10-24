@@ -1,20 +1,18 @@
 package com.jruk8.jtemplate.core.commands.user.authors;
 
 import com.jruk8.jtemplate.core.commands.CommandContext;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
+import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import org.incendo.cloud.annotations.Command;
-import org.incendo.cloud.annotations.CommandDescription;
-import org.incendo.cloud.annotations.Permission;
-import org.incendo.cloud.paper.util.sender.Source;
 
 import java.util.List;
 
 /**
  * Authors subcommand that displays the plugin version and authors.
  */
-@Command("jtemplate|jt")
-@Permission("jtemplate.user")
 public class AuthorsCommand {
 
     private final AuthorFormatter authorFormatter;
@@ -27,10 +25,21 @@ public class AuthorsCommand {
         this.pluginMeta = pluginMeta;
     }
 
-    @Command("authors")
-    @CommandDescription("Shows the authors of the plugin.")
-    @Permission("jtemplate.user.authors")
-    public void onAuthors(Source sender) {
+    /**
+     * Builds the {@code authors} Brigadier node, attached to the {@code jtemplate} root by the registrar.
+     *
+     * @return the configured subcommand node
+     */
+    public LiteralArgumentBuilder<CommandSourceStack> node() {
+        return Commands.literal("authors")
+                .requires(CommandContext.requiresPermission("jtemplate.user", "jtemplate.user.authors"))
+                .executes(context -> {
+                    onAuthors(context.getSource());
+                    return Command.SINGLE_SUCCESS;
+                });
+    }
+
+    public void onAuthors(CommandSourceStack sender) {
         String version = pluginMeta.getVersion();
         List<String> rawAuthors = pluginMeta.getAuthors();
         String authors = authorFormatter.formatAuthors(rawAuthors);
