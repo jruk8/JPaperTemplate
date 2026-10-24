@@ -22,11 +22,14 @@ All permissions are structured under the parent nodes `jtemplate.user` and
 ## Adding a Command
 
 1. Create a command class in a new subpackage of `core.commands` (e.g.
-   `core.commands.user.fun`), annotate it with
-   `@Command("jtemplate|jt")` plus the subcommand, permission and description.
-2. Register it in the matching registrar (`UserCommandsRegistrar` or
-   `AdminCommandsRegistrar`) with `annotationParser.parse(new MyCommand(...))`,
-   injecting only the services it needs (commonly `CommandContext`).
-3. Add the permission documentation in [permissions.md](permissions.md).
+   `core.commands.user.fun`) that builds a Brigadier node with
+   `Commands.literal(...)`, gates it with `requires()`, and runs its logic
+   in `executes(...)`.
+2. Attach the node to the root in the matching registrar
+   (`UserCommandsRegistrar` or `AdminCommandsRegistrar`) with
+   `root.then(new MyCommand(...).node())`, injecting only the services it
+   needs (commonly `CommandContext`).
+3. Add the permission documentation in [permissions.md](permissions.md) and a
+   `HelpEntry` so the command shows up in `/jtemplate help`.
 
 See [api.md](api.md) for the full walkthrough.

@@ -11,31 +11,36 @@ commands/placeholders. There are no singletons or static state.
 ## Add a Command
 
 1. Create a package `core.commands.user.<name>` (or `admin`) with a command
-   class:
+   class that builds a Brigadier node:
 
    ```java
-   @Command("jtemplate|jt")
-   @Permission("jtemplate.user")
    public class PingCommand {
        private final CommandContext ctx;
 
        public PingCommand(CommandContext ctx) { this.ctx = ctx; }
 
-       @Command("ping")
-       @Permission("jtemplate.user.ping")
-       @CommandDescription("Pong!")
-       public void onPing(Source sender) {
-           ctx.sendMessage(sender, "<green>Pong!</green>");
+       public LiteralArgumentBuilder<CommandSourceStack> node() {
+           return Commands.literal("ping")
+                   .requires(CommandContext.requiresPermission("jtemplate.user", "jtemplate.user.ping"))
+                   .executes(context -> {
+                       ctx.sendMessage(context.getSource(), "<green>Pong!</green>");
+                       return Command.SINGLE_SUCCESS;
+                   });
        }
    }
    ```
 
-2. Register it in the matching registrar
+   The root literal (`jtemplate`, alias `jt`) is built by
+   `CommandsRegistrar` and registered via `LifecycleEvents.COMMANDS`, so a
+   new command only defines its own subcommand node.
+
+2. Attach the node to the root in the matching registrar
    (`UserCommandsRegistrar.register()`):
-   `annotationParser.parse(new MyCommand(ctx));`
+   `root.then(new PingCommand(ctx).node());`
 
 3. Document the command and permission in `docs/commands.md` and
-   `docs/permissions.md`.
+   `docs/permissions.md`, and add a `HelpEntry` so it shows up in
+   `/jtemplate help`.
 
 ## Add a Config Option
 

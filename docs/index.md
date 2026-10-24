@@ -1,9 +1,10 @@
 ![Banner](assets/banner-1280x640.png)
 # JTemplate
 
-A clean, buildable starting point for Paper plugins: commands (Incendo
-Cloud), okaeri-configs, MiniMessage messaging, sounds, PlaceholderAPI
-placeholders and SQLite storage -- all wired without a DI framework.
+A clean, buildable starting point for Paper plugins: commands (Paper
+native Brigadier), okaeri-configs, MiniMessage messaging, sounds,
+PlaceholderAPI placeholders and SQLite storage -- all wired without a DI
+framework.
 
 ## Key Features
 

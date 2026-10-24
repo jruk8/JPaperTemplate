@@ -22,7 +22,7 @@ plugs it into the plugin.
 
 | Package | Purpose |
 | --- | --- |
-| `core.commands` | Incendo Cloud commands (`/jtemplate`, alias `/jt`): `help`, `authors`, `reload`. |
+| `core.commands` | Paper Brigadier commands (`/jtemplate`, alias `/jt`): `help`, `authors`, `reload`. |
 | `core.configs` | okaeri-configs setup that loads `config.yml`, `messages.yml`, `sounds.yml`. |
 | `core.messages` | MiniMessage / Legacy message parsing and dispatching. |
 | `core.sounds` | Config-driven sound playback. |

@@ -15,5 +15,7 @@
 | `jtemplate.admin` | Parent node for admin commands. | OP |
 | `jtemplate.admin.reload` | Use `/jtemplate reload`. | OP |
 
-Permissions are declared on the command classes with Incendo Cloud's
-`@Permission` annotation; see [commands.md](commands.md).
+Permissions are checked on the command nodes with Brigadier `requires()`
+predicates (see `CommandContext.requiresPermission`); each subcommand
+requires its parent node plus its own permission. See
+[commands.md](commands.md).
