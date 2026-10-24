@@ -4,29 +4,29 @@ import com.jruk8.jtemplate.core.Bootstrap;
 import com.jruk8.jtemplate.core.Reloader;
 import com.jruk8.jtemplate.core.commands.admin.AdminCommandsRegistrar;
 import com.jruk8.jtemplate.core.commands.user.UserCommandsRegistrar;
+import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.configuration.PluginMeta;
-import org.incendo.cloud.CommandManager;
-import org.incendo.cloud.annotations.AnnotationParser;
-import org.incendo.cloud.paper.util.sender.Source;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 /**
- * Registers all plugin commands.
+ * Registers all plugin commands through Paper's native Brigadier support.
  */
 public class CommandsRegistrar implements Bootstrap {
 
-    private final CommandManager<Source> commandManager;
-    private final AnnotationParser<Source> annotationParser;
+    private final LifecycleEventManager<Plugin> lifecycle;
     private final Reloader reloader;
     private final CommandContext commandContext;
     private final PluginMeta pluginMeta;
 
-    public CommandsRegistrar(CommandManager<Source> commandManager,
-                             AnnotationParser<Source> annotationParser,
+    public CommandsRegistrar(LifecycleEventManager<Plugin> lifecycle,
                              Reloader reloader,
                              CommandContext commandContext,
                              PluginMeta pluginMeta) {
-        this.commandManager = commandManager;
-        this.annotationParser = annotationParser;
+        this.lifecycle = lifecycle;
         this.reloader = reloader;
         this.commandContext = commandContext;
         this.pluginMeta = pluginMeta;
@@ -34,12 +34,11 @@ public class CommandsRegistrar implements Bootstrap {
 
     @Override
     public void register() {
-        var userCommands =
-                new UserCommandsRegistrar(annotationParser, commandManager, commandContext, pluginMeta);
-        userCommands.register();
-
-        var adminCommands =
-                new AdminCommandsRegistrar(annotationParser, commandContext, reloader);
-        adminCommands.register();
+        lifecycle.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
+            var root = Commands.literal("jtemplate");
+            new UserCommandsRegistrar(root, commandContext, pluginMeta).register();
+            new AdminCommandsRegistrar(root, commandContext, reloader).register();
+            event.registrar().register(root.build(), "JTemplate commands", List.of("jt"));
+        });
     }
 }
