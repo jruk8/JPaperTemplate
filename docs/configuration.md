@@ -61,7 +61,7 @@ PlaceholderAPI is installed.
 
 Sound effects for command feedback. Each entry supports `enabled`, a
 namespaced `sound` key, `pitch` and `volume`
-([sound explorer](https://mudkipdev.github.io/minecraft-sound-explorer/)):
+([sound explorer](https://mudkjp.github.io/minecraft-sound-explorer/)):
 
 - `success-sound` - played on successful commands.
 - `error-sound` - played on failed commands.
