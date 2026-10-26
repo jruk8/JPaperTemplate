@@ -32,29 +32,26 @@ class CommandUsageTrackerTest {
     }
 
     @Test
-    @DisplayName("should start at zero for a player and the server")
+    @DisplayName("should start at zero")
     void shouldStartAtZero() {
         assertEquals(0, tracker.playerUses(player));
-        assertEquals(0, tracker.globalUses());
     }
 
     @Test
-    @DisplayName("should record a usage for the player and the server")
-    void shouldRecordUsage() {
-        tracker.recordUsage(player);
+    @DisplayName("should record one use per execution")
+    void shouldRecordUse() {
+        tracker.recordUse(player);
 
         assertEquals(1, tracker.playerUses(player));
-        assertEquals(1, tracker.globalUses());
     }
 
     @Test
-    @DisplayName("should accumulate usages over time")
+    @DisplayName("should accumulate usages per player over time")
     void shouldAccumulateUsages() {
-        tracker.recordUsage(player);
-        tracker.recordUsage(player);
-        tracker.recordUsage(UUID.randomUUID());
+        tracker.recordUse(player);
+        tracker.recordUse(player);
+        tracker.recordUse(UUID.randomUUID());
 
         assertEquals(2, tracker.playerUses(player));
-        assertEquals(3, tracker.globalUses());
     }
 }

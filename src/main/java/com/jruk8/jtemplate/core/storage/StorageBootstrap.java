@@ -55,7 +55,7 @@ public final class StorageBootstrap implements Bootstrap, Reloadable {
             this.logger.info("SQLite storage ready at '" + fileName + "'.");
         } else {
             this.storage = null;
-            this.logger.severe("SQLite storage unavailable; state-dependent features are disabled.");
+            this.logger.severe("SQLite storage unavailable; stats read as 0 and writes are ignored.");
         }
     }
 }
