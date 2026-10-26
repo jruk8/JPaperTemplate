@@ -1,76 +1,103 @@
-![Banner](docs/assets/banner-1280x640.png)
-# JPaperTemplate
+<div align="center">
 
-A clean, buildable starting point for **Paper plugins** using Java 25, Gradle
-and the [jruk8 plugin-conventions](https://github.com/jruk8/plugin-conventions).
+![JTemplate banner](https://raw.githubusercontent.com/jruk8/JPaperTemplate/main/docs/assets/banner-1280x640.png)
 
-It intentionally ships as a small, working plugin — commands, configs, sounds,
-messages, PlaceholderAPI placeholders and SQLite storage — so you can see the
-intended architecture in action and extend it, or delete parts you do not need.
+<h3>A clean starting point for modern Paper plugins.</h3>
 
-## Requirements
+### [Wiki](https://jruk8.github.io/JPaperTemplate/) · [GitHub](https://github.com/jruk8/JPaperTemplate)
 
-- **Java 25**
-- **Paper 26.2+**
-- [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) — only needed for the `%jtemplate_...%` placeholders
+</div>
 
-## Module overview
+# Quick Start 🏃
 
-Everything lives under `com.jruk8.jtemplate.core` in small, self-contained
-packages. Each module owns its config class, its services and a registrar that
-plugs it into the plugin.
+1. Find & replace `jtemplate` → *yourname* and `JTemplate` → *YourName*
+   across the repo (packages, commands, placeholders, database, docs).
+2. Update `gradle.properties` (`pluginName`, `pluginMain`, `pluginAuthor`,
+   `pluginDescription`, `pluginWebsite`) and `rootProject.name` in
+   `settings.gradle`.
+3. Build the jar and drop it into `plugins/`.
 
-| Package | Purpose |
+**That's it!** You have a working plugin with Brigadier commands,
+MiniMessage messages, sounds, PAPI placeholders, SQLite storage and a
+GitHub update checker. Delete the modules you do not need, then add your
+business logic on top.
+
+# Features
+
+- **Brigadier commands** » Paper-native nodes with permission gates,
+  config-driven root aliases, and a bare-root help listing.
+- **Selectors ready** » `TargetSelector` plus selector/value tab
+  completion out of the box.
+- **MiniMessage everywhere** » `{braces}` for plugin placeholders,
+  angle brackets reserved for raw MiniMessage, shared color palette.
+- **Sounds** » config-driven Adventure sounds per feedback event.
+- **Placeholders** » a PAPI expansion with self/other variants
+  (`%jtemplate_uses%`, `%jtemplate_uses_<player>%`).
+- **Update checker** » async GitHub releases check (console log, join
+  notice, `/version` line).
+- **Reloadable** » `/jtemplate reload` re-reads every config and
+  re-opens storage and placeholders without a restart.
+
+### Requirements
+
+- Server Software » [Paper 26.2+](https://papermc.io/downloads/paper) (Folia supported)
+- Java Version » **Java 25**
+- Dependencies » **None** (PlaceholderAPI is optional, only for the
+  `%jtemplate_...%` placeholders)
+
+# Commands
+
+| Command | Description |
 | --- | --- |
-| `core.commands` | Paper Brigadier commands (`/jtemplate`, alias `/jt`): `help`, `authors`, `reload`. |
-| `core.configs` | okaeri-configs setup that loads `config.yml`, `messages.yml`, `sounds.yml`. |
-| `core.messages` | MiniMessage / Legacy message parsing and dispatching. |
-| `core.sounds` | Config-driven sound playback. |
-| `core.placeholders` | PlaceholderAPI expansion template that counts command executions. |
-| `core.storage` | Generic SQLite key/value storage (`jtemplate.db`). |
+| `/jtemplate <help\|version\|reload>` | Help, version, and config reload (alias `/jt`). |
 
-## Build, test, checkstyle
+Running the root with no arguments shows the help listing. Full table and
+examples live in
+[commands.md](https://github.com/jruk8/JPaperTemplate/blob/main/docs/commands.md).
+
+# Permissions
+
+| Permission | Description | Default |
+| --- | --- | --- |
+| `jtemplate.other` | Target other players (needs the matching command permission too). | OP |
+| `jtemplate.reload` | Use `/jtemplate reload`. | OP |
+| `jtemplate.help` | Use `/jtemplate help` (entries are permission-filtered). | Everyone |
+| `jtemplate.version` | Use `/jtemplate version`. | Everyone |
+
+# Configuration
+
+First start generates `config.yml`, `messages.yml` and `sounds.yml` in
+`plugins/JTemplate/`:
+
+- `updateChecker` » the async GitHub update check (console log,
+  join notice, `/version` line).
+- `aliases` » extra labels for the `/jtemplate` root (restart to apply).
+- `storage` » the SQLite database file.
+- `colors` » the shared message color palette.
+- `metrics` » anonymous bStats statistics (restart to apply).
+- `messages.yml` / `sounds.yml` » every message and the sound played
+  for each feedback event.
+
+Every value is documented in [configuration.md](https://github.com/jruk8/JPaperTemplate/blob/main/docs/configuration.md).
+
+# Build
 
 ```shell
 ./gradlew build            # macOS/Linux
 .\gradlew.bat build        # Windows
 ```
 
-`build` runs the tests (`src/test/java` mirrors the main package layout) and
-both checkstyle tasks. The plugin jar is written to `build/libs/`.
+`build` runs the tests and both checkstyle tasks; the jar lands in
+`build/libs/`. Built with Java 25 and the
+[jruk8 plugin-conventions](https://github.com/jruk8/plugin-conventions).
 
-Style rules enforced by checkstyle:
+### Links
 
-- Methods are limited to 45 lines, lines to 120 chars
-- No star imports
-- Files are capped at 750 lines — keep classes small
-
-## Start a new plugin
-
-1. **Find & replace the name everywhere.** Do a project-wide find & replace of
-   `jtemplate` → *yourname* and `JTemplate` → *YourName* (covers the base
-   package, command labels, placeholder identifiers, the default database name
-   and this documentation). Optionally rename the `com/jruk8/jtemplate`
-   folders to match.
-2. Update `gradle.properties`: `pluginGroup` (base package), `pluginName`,
-   `pluginMain` (fully qualified main class), `pluginAuthor`,
-   `pluginDescription`, `pluginWebsite` and optionally `paperApiVersion`.
-3. Update `rootProject.name` in `settings.gradle`.
-4. Tweak the message prefix in `MessagesConfig` (`core/messages`) if desired.
-5. Delete the template bits you do not need — see
-   [Extending the template](docs/api.md) for what plugs in where.
-
-## Documentation
-
-- [Getting Started](docs/getting-started.md)
-- [Commands](docs/commands.md)
-- [Permissions](docs/permissions.md)
-- [Configuration](docs/configuration.md)
-- [Placeholders](docs/placeholders.md)
-- [Extending the template (API)](docs/api.md)
+- [Documentation](https://jruk8.github.io/JPaperTemplate/)
+- [GitHub](https://github.com/jruk8/JPaperTemplate)
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](https://github.com/jruk8/JPaperTemplate/blob/main/CONTRIBUTING.md).
 
-&copy; 2026 jruk8. Licensed under [GPL-3.0](LICENSE).
+&copy; 2026 jruk8. Licensed under [GPL-3.0](https://github.com/jruk8/JPaperTemplate/blob/main/LICENSE).
