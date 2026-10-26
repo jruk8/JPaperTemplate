@@ -1,3 +1,7 @@
+---
+icon: material/console
+---
+
 # Commands
 
 All commands are available under `/jtemplate` and its aliases (default

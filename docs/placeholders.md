@@ -1,3 +1,7 @@
+---
+icon: material/variable
+---
+
 # Placeholders
 
 PlaceholderAPI support is handled by the `core.placeholders` module. When
@@ -11,11 +15,12 @@ identifier `jtemplate`. The expansion is re-registered on
 | --- | --- | --- |
 | `%jtemplate_uses%` | INTEGER | Number of times you have executed a tracked command. |
 | `%jtemplate_uses_<player>%` | INTEGER | Another player's tracked command executions. |
+| `%jtemplate_uses_global%` | INTEGER | Server-wide tracked command executions. |
 
 A use is recorded whenever a player successfully runs a tracked command
 (currently `/jtemplate version`). Executions by console are not attributed
 to any player and are not counted. Counts are stored in the SQLite
-database, so they survive restarts and are separate per player. Unknown
+database per player and globally, so they survive restarts. Unknown
 player names read as `0`.
 
 ## Adding Your Own Placeholders

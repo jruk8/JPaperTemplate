@@ -1,3 +1,7 @@
+---
+icon: material/puzzle
+---
+
 # Extending the Template
 
 This page explains where new code plugs in. Every module follows the same

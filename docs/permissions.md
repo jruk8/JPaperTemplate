@@ -1,7 +1,12 @@
+---
+icon: material/key
+---
+
 # Permissions
 
 | Permission | Description | Default |
 | --- | --- | --- |
+| `jtemplate.self` | Act as yourself in commands that support selectors. | Everyone |
 | `jtemplate.other` | Target other players with commands that support selectors (needs the matching command permission too). | OP |
 | `jtemplate.reload` | Use `/jtemplate reload`. | OP |
 | `jtemplate.help` | Use `/jtemplate help` (entries are permission-filtered). | Everyone |
