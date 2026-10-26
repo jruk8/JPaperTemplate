@@ -7,6 +7,13 @@ package com.jruk8.jtemplate.core.commands;
 public final class TemplatePermissions {
 
     /**
+     * Act as yourself in commands that support selectors. Pairs with
+     * {@link #OTHER}: self-scoped use needs this, targeting others needs
+     * that one.
+     */
+    public static final String SELF = "jtemplate.self";
+
+    /**
      * Target other players with commands that support selectors. Never
      * sufficient on its own: changing someone else still needs the
      * matching command permission.

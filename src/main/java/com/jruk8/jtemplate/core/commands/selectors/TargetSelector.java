@@ -6,8 +6,11 @@ import com.jruk8.jtemplate.core.messages.MessagesConfig;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSelectorArgumentResolver;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -85,5 +88,31 @@ public final class TargetSelector {
             return true;
         }
         return targets.stream().anyMatch(target -> !target.getUniqueId().equals(self.getUniqueId()));
+    }
+
+    /**
+     * Returns the tab-completion candidates for a target selector argument,
+     * gated by permission: without the {@code other} permission only the
+     * {@code @s} and own-name entries appear, and without the {@code self}
+     * permission those self entries are removed as well.
+     *
+     * @param source the command source completing the argument
+     * @param prefix the already-typed, lower-cased input used for filtering (may be null)
+     * @return the permitted selector candidates
+     */
+    public static List<String> suggestTargets(CommandSourceStack source, String prefix) {
+        CommandSender sender = source.getSender();
+        boolean other = sender.hasPermission(TemplatePermissions.OTHER);
+        boolean self = sender.hasPermission(TemplatePermissions.SELF);
+        String name = sender instanceof Player player ? player.getName() : "";
+        List<String> online = new ArrayList<>();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            online.add(player.getName());
+        }
+        List<String> candidates = new ArrayList<>(SelectorSuggestions.suggest(other, name, online, prefix));
+        if (!self) {
+            candidates.removeIf(candidate -> candidate.equals("@s") || candidate.equals(name));
+        }
+        return candidates;
     }
 }

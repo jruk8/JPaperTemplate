@@ -19,6 +19,9 @@ dependencies:
       required: false
       join-classpath: true
 permissions:
+  jtemplate.self:
+    description: Act as yourself in commands that support selectors.
+    default: true
   jtemplate.other:
     description: Target other players with commands that support selectors (needs the matching command permission too).
     default: op
