@@ -1,6 +1,7 @@
 package com.jruk8.jtemplate.core.commands.user;
 
 import com.jruk8.jtemplate.core.commands.user.help.HelpEntry;
+import org.bukkit.command.CommandSender;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -8,14 +9,17 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class HelpEntryTest {
 
     private static final List<HelpEntry> ENTRIES = List.of(
-            new HelpEntry("/jtemplate help [query]", "Shows this help menu.", "jtemplate.user.help"),
-            new HelpEntry("/jtemplate authors", "Shows the authors of the plugin.", "jtemplate.user.authors"),
-            new HelpEntry("/jtemplate reload", "Reloads the plugin configuration.", "jtemplate.admin.reload")
+            new HelpEntry("/jtemplate help [query]", "Shows this help menu."),
+            new HelpEntry("/jtemplate version", "Shows the plugin version.", "jtemplate.version"),
+            new HelpEntry("/jtemplate reload", "Reloads the plugin configuration.", "jtemplate.reload")
     );
 
     @Nested
@@ -42,10 +46,10 @@ class HelpEntryTest {
         @Test
         @DisplayName("should match syntax case-insensitively")
         void shouldMatchSyntaxCaseInsensitively() {
-            var matches = HelpEntry.matching(ENTRIES, "AUTHORS");
+            var matches = HelpEntry.matching(ENTRIES, "VERSION");
 
             assertEquals(1, matches.size());
-            assertEquals("/jtemplate authors", matches.getFirst().syntax());
+            assertEquals("/jtemplate version", matches.getFirst().syntax());
         }
 
         @Test
@@ -61,6 +65,32 @@ class HelpEntryTest {
         @DisplayName("should return no entries when nothing matches")
         void shouldReturnEmptyWhenNothingMatches() {
             assertTrue(HelpEntry.matching(ENTRIES, "nothing-like-this").isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("visibleTo()")
+    class VisibilityTests {
+
+        @Test
+        @DisplayName("should show permission-less entries to everyone")
+        void shouldShowOpenEntriesToEveryone() {
+            CommandSender sender = mock(CommandSender.class);
+
+            assertTrue(ENTRIES.getFirst().visibleTo(sender));
+        }
+
+        @Test
+        @DisplayName("should gate entries on any of their permissions")
+        void shouldGateOnPermissions() {
+            CommandSender sender = mock(CommandSender.class);
+            when(sender.hasPermission("jtemplate.version")).thenReturn(true);
+            var entry = new HelpEntry("/jtemplate speed reset", "Resets both.",
+                    "jtemplate.flyspeed", "jtemplate.version");
+
+            assertTrue(entry.visibleTo(sender));
+            assertTrue(ENTRIES.get(1).visibleTo(sender));
+            assertFalse(ENTRIES.get(2).visibleTo(sender));
         }
     }
 }

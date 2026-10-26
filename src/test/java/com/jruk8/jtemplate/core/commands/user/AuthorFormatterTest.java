@@ -1,6 +1,6 @@
 package com.jruk8.jtemplate.core.commands.user;
 
-import com.jruk8.jtemplate.core.commands.user.authors.AuthorFormatter;
+import com.jruk8.jtemplate.core.commands.user.version.AuthorFormatter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -99,6 +99,32 @@ class AuthorFormatterTest {
         void shouldReturnEmptyForNoAuthors() {
             String result = authorFormatter.formatAuthors(Collections.emptyList());
             assertEquals("", result);
+        }
+    }
+
+    @Nested
+    @DisplayName("author links")
+    class AuthorLinkTests {
+
+        @Test
+        @DisplayName("should link a known author to their page")
+        void shouldLinkKnownAuthor() {
+            String result = authorFormatter.formatSingleAuthor("jruk");
+            assertEquals(
+                    "<click:open_url:'https://github.com/jruk8'>"
+                            + "<hover:show_text:'https://github.com/jruk8'>jruk</hover></click>",
+                    result);
+        }
+
+        @Test
+        @DisplayName("should link only the known author in a pair")
+        void shouldLinkOnlyKnownAuthor() {
+            String result = authorFormatter.formatTwoAuthors("jruk", "MyOther");
+            assertEquals(
+                    "<click:open_url:'https://github.com/jruk8'>"
+                            + "<hover:show_text:'https://github.com/jruk8'>jruk</hover></click>"
+                            + " <gray>and</gray> MyOther",
+                    result);
         }
     }
 }

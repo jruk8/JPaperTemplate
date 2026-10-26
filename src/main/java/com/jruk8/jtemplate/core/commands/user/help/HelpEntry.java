@@ -1,17 +1,38 @@
 package com.jruk8.jtemplate.core.commands.user.help;
 
+import org.bukkit.command.CommandSender;
+
 import java.util.List;
 import java.util.Locale;
 
 /**
  * One row of the {@code /jtemplate help} listing: the syntax players type, a short description,
- * and the permission that gates its visibility.
+ * and the permissions that gate its visibility.
  *
- * @param syntax the command syntax, e.g. {@code "/jtemplate authors"}
+ * @param syntax the command syntax, e.g. {@code "/jtemplate version"}
  * @param description the short help text for the command
- * @param permission the permission a sender must hold to see this entry
+ * @param permissions the permissions, one of which a sender must hold to see this entry;
+ *                    empty means visible to everyone
  */
-public record HelpEntry(String syntax, String description, String permission) {
+public record HelpEntry(String syntax, String description, String... permissions) {
+
+    /**
+     * Returns whether a sender may see this entry (holds any of its permissions, or it has none).
+     *
+     * @param sender the sender to check
+     * @return {@code true} when the entry should be listed
+     */
+    public boolean visibleTo(CommandSender sender) {
+        if (permissions.length == 0) {
+            return true;
+        }
+        for (String permission : permissions) {
+            if (sender.hasPermission(permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Filters entries by an optional search query, matching case-insensitively against syntax and description.
