@@ -1,6 +1,5 @@
 package com.jruk8.jtemplate.core.configs;
 
-import com.jruk8.jtemplate.core.messages.MessageFormat;
 import eu.okaeri.configs.OkaeriConfig;
 import eu.okaeri.configs.annotation.Header;
 import eu.okaeri.configs.annotation.Comment;
@@ -14,24 +13,22 @@ import java.util.List;
 @SuppressWarnings("FieldMayBeFinal")
 @Header({
         "################################",
-        "#         Plugin Config        #",
+        "#         JTemplate          #",
         "################################",
+        "",
+        "# A starting point for a JSuite plugin.",
         ""
 })
 public class PluginConfig extends OkaeriConfig {
 
-    @Comment({
-            "Configures which format to use for messages.",
-            "Supported values: MINIMESSAGE, LEGACY",
-            "Default: MINIMESSAGE"
-    })
-    private MessageFormat messageFormat = MessageFormat.MINIMESSAGE;
+    @Comment("GitHub update checker settings.")
+    private UpdateChecker updateChecker = new UpdateChecker();
 
     @Comment({
-            "PlaceholderAPI placeholder settings.",
-            "Placeholders are exposed as %<identifier>_<name>%, e.g. %jtemplate_authors_command_uses%."
+            "Extra labels for the /jtemplate root command (shortcuts like /jt).",
+            "Applies on restart."
     })
-    private Placeholders placeholders = new Placeholders();
+    private List<String> aliases = List.of("jt");
 
     @Comment({
             "SQLite storage settings.",
@@ -39,24 +36,17 @@ public class PluginConfig extends OkaeriConfig {
     })
     private Storage storage = new Storage();
 
-    @Getter
-    @Setter
-    @SuppressWarnings("FieldMayBeFinal")
-    public static class Placeholders extends OkaeriConfig {
+    @Comment({
+            "Color palette used by every message via {plain}, {brand}, {hl} and",
+            "{error}. Values are MiniMessage color tags."
+    })
+    private Colors colors = new Colors();
 
-        @Comment("Enables the PlaceholderAPI expansion (requires PlaceholderAPI on the server).")
-        private boolean enabled = true;
-
-        @Comment({"Identifier prefix shared by all placeholders.",
-                "Example: with 'jtemplate', the authors placeholder is %jtemplate_authors_command_uses%."})
-        private String identifier = "jtemplate";
-
-        @Comment("The command that the template placeholders track (without a leading slash).")
-        private String command = "authors";
-
-        @Comment("Base command labels (and aliases) that count as executions of the plugin's command.")
-        private List<String> labels = List.of("jtemplate", "jt");
-    }
+    @Comment({
+            "Anonymous usage statistics via bStats (open-source, no personal data or IP addresses).",
+            "Requires a server restart to take effect."
+    })
+    private Metrics metrics = new Metrics();
 
     @Getter
     @Setter
@@ -65,5 +55,45 @@ public class PluginConfig extends OkaeriConfig {
 
         @Comment("Name of the SQLite database file created in the plugin's data folder.")
         private String dbFile = "jtemplate.db";
+    }
+
+    @Getter
+    @Setter
+    @SuppressWarnings("FieldMayBeFinal")
+    public static class Colors extends OkaeriConfig {
+
+        @Comment("MiniMessage color tag for normal message bodies, used via {plain}.")
+        private String plainColor = "<#b8d8e0>";
+
+        @Comment("MiniMessage color tag for brand accents, used via {brand}.")
+        private String brandColor = "<#84b8db>";
+
+        @Comment("MiniMessage color tag for highlighted words, used via {hl}.")
+        private String highlightColor = "<#ebf1f2>";
+
+        @Comment("MiniMessage color tag for errors, used via {error}.")
+        private String errorColor = "<#415ad9>";
+    }
+
+    @Getter
+    @Setter
+    @SuppressWarnings("FieldMayBeFinal")
+    public static class Metrics extends OkaeriConfig {
+
+        @Comment("Send anonymous statistics to bStats.")
+        private boolean enabled = true;
+    }
+
+    @Getter
+    @Setter
+    @SuppressWarnings("FieldMayBeFinal")
+    public static class UpdateChecker extends OkaeriConfig {
+
+        @Comment({
+                "Checks GitHub releases for new JTemplate versions on enable and on reload.",
+                "The check runs asynchronously; findings go to the console and to",
+                "players holding jtemplate.reload (on join and via /jtemplate version)."
+        })
+        private boolean enabled = true;
     }
 }
