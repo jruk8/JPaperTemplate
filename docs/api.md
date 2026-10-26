@@ -21,32 +21,38 @@ commands/placeholders. There are no singletons or static state.
 
        public LiteralArgumentBuilder<CommandSourceStack> node() {
            return Commands.literal("ping")
-                   .requires(CommandContext.requiresPermission("jtemplate.user", "jtemplate.user.ping"))
+                   .requires(CommandContext.requiresPermission(TemplatePermissions.PING))
                    .executes(context -> {
-                       ctx.sendMessage(context.getSource(), "<green>Pong!</green>");
+                       // Own text lives in MessagesConfig; {braces} resolve from the map.
+                       ctx.sendMessage(context.getSource(),
+                               messages -> messages.getCore().getHelpHeader(), Map.of());
                        return Command.SINGLE_SUCCESS;
                    });
        }
    }
    ```
 
-   The root literal (`jtemplate`, alias `jt`) is built by
-   `CommandsRegistrar` and registered via `LifecycleEvents.COMMANDS`, so a
-   new command only defines its own subcommand node.
+   Commands are Paper-native Brigadier nodes registered through
+   `LifecycleEvents.COMMANDS` (see `CommandsRegistrar`). The root literal
+   (`jtemplate`, plus its configured aliases) carries a bare-root help
+   fallback, so a new command only defines its own subcommand node.
+   Messages are strictly MiniMessage: plugin placeholders use `{braces}`,
+   angle brackets are raw MiniMessage.
 
-2. Attach the node to the root in the matching registrar
+2. Register it in the matching registrar
    (`UserCommandsRegistrar.register()`):
    `root.then(new PingCommand(ctx).node());`
 
-3. Document the command and permission in `docs/commands.md` and
-   `docs/permissions.md`, and add a `HelpEntry` so it shows up in
-   `/jtemplate help`.
+3. Declare the permission in `paper-plugin.yml` (with a constant in
+   `TemplatePermissions`) and document the command in `docs/commands.md` and
+   `docs/permissions.md`. Add a `HelpEntry` in `HelpCommand` so
+   `/jtemplate help` lists it.
 
 ## Add a Config Option
 
 The config classes are okaeri-configs. For a small option, add a field to an
 existing config class; for a coherent new section, add a nested static class
-and give it a field in the parent (see `PluginConfig.Placeholders` for the
+and give it a field in the parent (see `PluginConfig.Colors` for the
 pattern). The section will be created in the yaml file automatically and
 reloaded by `ConfigRegistrar` on `/jtemplate reload`.
 
@@ -63,11 +69,12 @@ state is produced (listener, command) and consumed (placeholder).
 
 ## Add a Placeholder
 
-Add a switch case to `AuthorsCommandUsageExpansion.onRequest()`:
+Add a branch to `UsageExpansion.onRequest()`:
 
 ```java
-case "my_stat" -> player == null ? null
-        : String.valueOf(tracker.playerUses(player.getUniqueId()));
+if ("my_stat".equals(params)) {
+    return selfUses(player, tracker::playerUses);
+}
 ```
 
 Provider the value through an injected service and store it in SQLite if it
@@ -79,18 +86,21 @@ PlaceholderAPI via `getPlaceholders()`.
 If you do not need PAPI in your plugin:
 
 1. Delete the `core.placeholders` package.
-2. Delete the `placeholders` section from `PluginConfig` and remove the wiring
-   block in `JTemplatePlugin.setupStorageAndPlaceholders()`.
-3. Remove `PlaceholderAPI` from `plugin.yml` (soft-depend) -- or keep it if
-   your messages use `%otherplugin_...%` placeholders.
+2. Remove the usage tracker wiring in `JTemplatePlugin`
+   (`setupStorageAndPlaceholders()` and the `CommandsRegistrar` argument).
+3. Remove `PlaceholderAPI` from `paper-plugin.yml` (`dependencies`), or keep
+   it if your messages use `%otherplugin_...%` placeholders.
 
 ## Modules Reference
 
 | Package | Key classes |
 | --- | --- |
-| `core.commands` | `CommandsRegistrar`, `UserCommandsRegistrar`, `AdminCommandsRegistrar`, `CommandContext` |
+| `core.commands` | `CommandsRegistrar`, `UserCommandsRegistrar`, `AdminCommandsRegistrar`, `CommandContext`, `TemplatePermissions` |
+| `core.commands.selectors` | `TargetSelector`, `SelectorSuggestions`, `ValueSuggestions` |
+| `core.commands.user` | `HelpCommand`, `HelpEntry`, `VersionCommand`, `AuthorFormatter` |
 | `core.configs` | `ConfigRegistrar`, `PluginConfig` |
 | `core.messages` | `MessageBootstrap`, `Messenger`, `MessageParser` |
 | `core.sounds` | `SoundPlayer`, `SoundsConfig` |
-| `core.placeholders` | `PlaceholdersBootstrap`, `CommandUsageTracker`, `AuthorsCommandUsageListener`, `AuthorsCommandUsageExpansion` |
+| `core.placeholders` | `PlaceholdersBootstrap`, `CommandUsageTracker`, `UsageExpansion` |
 | `core.storage` | `StorageBootstrap`, `SqliteStorage` |
+| `core.update` | `UpdateCheckerBootstrap`, `UpdateCheckService`, `GitHubReleaseHttp`, `UpdateCheckNotifier`, `UpdateCheckJoinListener` |

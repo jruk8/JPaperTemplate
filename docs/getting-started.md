@@ -20,14 +20,14 @@
 
 ```text
 /jtemplate help
-/jtemplate authors
+/jtemplate version
 /jtemplate reload
 ```
 
 `/jt` is a built-in alias for `/jtemplate`. The template placeholders count
-how often `/jtemplate authors` is executed (per player and globally). Run it a
+how often `/jtemplate version` is executed. Run it a
 couple of times, install PlaceholderAPI, and try
-`%jtemplate_authors_command_uses%` in a scoreboard or chat.
+`%jtemplate_uses%` in a scoreboard or chat.
 
 ## Starting a New Plugin from the Template
 

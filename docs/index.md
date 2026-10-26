@@ -13,9 +13,11 @@ framework.
 - **Manual wiring** - a registrar per module (`Bootstrap`) composes services;
   `JTemplatePlugin` is the single composition root.
 - **Placeholders** - a template PlaceholderAPI expansion counting command
-  executions, with a configurable identifier.
+  executions (`%jtemplate_uses%`, plus a per-player variant).
 - **SQLite storage** -- generic per-player / global counters in
   `jtemplate.db`, driven by the server's bundled JDBC driver.
+- **Update checker** -- async GitHub releases check with console and
+  in-game notices.
 - **Reloadable** -- `/jtemplate reload` re-reads every config and re-opens
   the storage and placeholders.
 

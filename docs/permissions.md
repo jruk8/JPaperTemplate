@@ -1,21 +1,14 @@
 # Permissions
 
-## User Commands (`jtemplate.user`)
-
 | Permission | Description | Default |
 | --- | --- | --- |
-| `jtemplate.user` | Parent node for user commands. | Everyone |
-| `jtemplate.user.help` | Use `/jtemplate help`. | Everyone |
-| `jtemplate.user.authors` | Use `/jtemplate authors`. | Everyone |
-
-## Admin Commands (`jtemplate.admin`)
-
-| Permission | Description | Default |
-| --- | --- | --- |
-| `jtemplate.admin` | Parent node for admin commands. | OP |
-| `jtemplate.admin.reload` | Use `/jtemplate reload`. | OP |
+| `jtemplate.other` | Target other players with commands that support selectors (needs the matching command permission too). | OP |
+| `jtemplate.reload` | Use `/jtemplate reload`. | OP |
+| `jtemplate.help` | Use `/jtemplate help` (entries are permission-filtered). | Everyone |
+| `jtemplate.version` | Use `/jtemplate version`. | Everyone |
 
 Permissions are checked on the command nodes with Brigadier `requires()`
-predicates (see `CommandContext.requiresPermission`); each subcommand
-requires its parent node plus its own permission. See
+predicates (see `CommandContext.requiresPermission`); the node constants
+live in `TemplatePermissions`. Commands that target other players check
+`jtemplate.other` through `TargetSelector`. See
 [commands.md](commands.md).
