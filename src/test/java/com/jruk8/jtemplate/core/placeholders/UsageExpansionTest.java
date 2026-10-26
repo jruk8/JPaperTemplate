@@ -50,14 +50,15 @@ class UsageExpansionTest {
     }
 
     @Test
-    @DisplayName("should advertise the jtemplate identifier and both placeholders")
+    @DisplayName("should advertise the jtemplate identifier and every placeholder")
     void shouldAdvertisePlaceholders() {
         var placeholders = expansion().getPlaceholders();
 
         assertEquals("jtemplate", expansion().getIdentifier());
-        assertEquals(2, placeholders.size());
+        assertEquals(3, placeholders.size());
         assertTrue(placeholders.contains("%jtemplate_uses%"));
         assertTrue(placeholders.contains("%jtemplate_uses_<player>%"));
+        assertTrue(placeholders.contains("%jtemplate_uses_global%"));
     }
 
     @Test
@@ -85,6 +86,14 @@ class UsageExpansionTest {
         when(tracker.playerUses(otherId)).thenReturn(4);
 
         assertEquals("4", expansion().onRequest(mock(OfflinePlayer.class), "uses_Alex"));
+    }
+
+    @Test
+    @DisplayName("should resolve the global counter")
+    void shouldResolveGlobalCounter() {
+        when(tracker.globalUses()).thenReturn(11);
+
+        assertEquals("11", expansion().onRequest(mock(OfflinePlayer.class), "uses_global"));
     }
 
     @Test

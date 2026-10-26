@@ -35,6 +35,7 @@ class CommandUsageTrackerTest {
     @DisplayName("should start at zero")
     void shouldStartAtZero() {
         assertEquals(0, tracker.playerUses(player));
+        assertEquals(0, tracker.globalUses());
     }
 
     @Test
@@ -43,6 +44,7 @@ class CommandUsageTrackerTest {
         tracker.recordUse(player);
 
         assertEquals(1, tracker.playerUses(player));
+        assertEquals(1, tracker.globalUses());
     }
 
     @Test
@@ -53,5 +55,6 @@ class CommandUsageTrackerTest {
         tracker.recordUse(UUID.randomUUID());
 
         assertEquals(2, tracker.playerUses(player));
+        assertEquals(3, tracker.globalUses());
     }
 }

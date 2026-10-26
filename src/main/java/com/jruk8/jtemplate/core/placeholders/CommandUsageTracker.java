@@ -23,15 +23,20 @@ public final class CommandUsageTracker {
     }
 
     /**
-     * Records one execution of a tracked command.
+     * Records one execution of a tracked command, per player and globally.
      *
      * @param player the player that executed the command
      */
     public void recordUse(UUID player) {
         this.storage.increment(USES_KEY, player);
+        this.storage.incrementGlobal(USES_KEY);
     }
 
     public int playerUses(UUID player) {
         return this.storage.playerTotal(USES_KEY, player);
+    }
+
+    public int globalUses() {
+        return this.storage.globalTotal(USES_KEY);
     }
 }

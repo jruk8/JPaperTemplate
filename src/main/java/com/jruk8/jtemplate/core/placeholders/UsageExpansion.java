@@ -12,14 +12,15 @@ import java.util.function.ToIntFunction;
 /**
  * The JTemplate PlaceholderAPI expansion.
  * <p>
- * Identifier {@code jtemplate}, with a self and an other-player variant of
- * the {@code uses} counter. Unknown players read as {@code 0}; the self
- * variant needs a player context.
+ * Identifier {@code jtemplate}, with self, other-player and global
+ * variants of the {@code uses} counter. Unknown players read as {@code 0};
+ * the self variant needs a player context.
  */
 public final class UsageExpansion extends PlaceholderExpansion {
 
     public static final String IDENTIFIER = "jtemplate";
     public static final String USES = "uses";
+    public static final String GLOBAL = "global";
 
     private final CommandUsageTracker tracker;
     private final JavaPlugin plugin;
@@ -60,7 +61,8 @@ public final class UsageExpansion extends PlaceholderExpansion {
     public List<String> getPlaceholders() {
         return List.of(
                 "%" + IDENTIFIER + "_" + USES + "%",
-                "%" + IDENTIFIER + "_" + USES + "_<player>%"
+                "%" + IDENTIFIER + "_" + USES + "_<player>%",
+                "%" + IDENTIFIER + "_" + USES + "_" + GLOBAL + "%"
         );
     }
 
@@ -68,6 +70,9 @@ public final class UsageExpansion extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         if (USES.equals(params)) {
             return selfUses(player, this.tracker::playerUses);
+        }
+        if ((USES + "_" + GLOBAL).equals(params)) {
+            return String.valueOf(this.tracker.globalUses());
         }
         if (params.startsWith(USES + "_")) {
             return namedUses(params.substring(USES.length() + 1), this.tracker::playerUses);
