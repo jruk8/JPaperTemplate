@@ -5,11 +5,8 @@ import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,12 +45,6 @@ class MessageParserTest {
         parser = new MessageParser(pluginConfig, messagesConfig);
     }
 
-    @AfterEach
-    void tearDown() {
-        // Reset config to defaults between tests
-        pluginConfig.setMessageFormat(MessageFormat.MINIMESSAGE);
-    }
-
     @Nested
     @DisplayName("parse() guard clauses")
     class GuardClauseTests {
@@ -82,10 +73,35 @@ class MessageParserTest {
         void shouldReplacePrefixPlaceholder() {
             String raw = "{prefix}Hello";
             Component result = parser.parse(raw, Map.of());
-            // The prefix from MessageConfig is "<gradient:#5e42f4:#b742f4>[JTemplate]</gradient> <gray>»</gray> "
             // After MiniMessage parsing, the result should contain the prefix text
             String resultString = PLAIN_TEXT.serialize(result);
             assertTrue(resultString.contains("[JTemplate]"));
+        }
+    }
+
+    @Nested
+    @DisplayName("parse() color palette replacement")
+    class ColorPaletteTests {
+
+        @Test
+        @DisplayName("should replace every color placeholder with its config tag")
+        void shouldReplaceColorPlaceholders() {
+            String raw = "{plain}a{brand}b{hl}c{error}d";
+            Component result = parser.parse(raw, Map.of());
+            String serialized = MINI_MESSAGE.serialize(result);
+            assertTrue(serialized.contains("#b8d8e0"));
+            assertTrue(serialized.contains("#84b8db"));
+            assertTrue(serialized.contains("#ebf1f2"));
+            assertTrue(serialized.contains("#415ad9"));
+        }
+
+        @Test
+        @DisplayName("should follow palette changes without a parser rebuild")
+        void shouldFollowPaletteChanges() {
+            pluginConfig.getColors().setPlainColor("<red>");
+            Component result = parser.parse("{plain}Hello", Map.of());
+            String serialized = MINI_MESSAGE.serialize(result);
+            assertTrue(serialized.contains("red"));
         }
     }
 
@@ -151,20 +167,9 @@ class MessageParserTest {
     class FormatSelectionTests {
 
         @Test
-        @DisplayName("should use MiniMessage format by default")
-        void shouldUseMiniMessageByDefault() {
-            pluginConfig.setMessageFormat(MessageFormat.MINIMESSAGE);
+        @DisplayName("should always use MiniMessage format")
+        void shouldAlwaysUseMiniMessage() {
             String raw = "<green>Hello</green>";
-            Component result = parser.parse(raw, Map.of());
-            String resultString = PLAIN_TEXT.serialize(result);
-            assertTrue(resultString.contains("Hello"));
-        }
-
-        @Test
-        @DisplayName("should use Legacy format when configured")
-        void shouldUseLegacyFormat() {
-            pluginConfig.setMessageFormat(MessageFormat.LEGACY);
-            String raw = "&aHello";
             Component result = parser.parse(raw, Map.of());
             String resultString = PLAIN_TEXT.serialize(result);
             assertTrue(resultString.contains("Hello"));
@@ -172,17 +177,23 @@ class MessageParserTest {
     }
 
     @Nested
-    @DisplayName("parse() with TagResolvers")
-    class TagResolverTests {
+    @DisplayName("parse() newline escapes")
+    class NewlineTests {
 
         @Test
-        @DisplayName("should apply MiniMessage tag resolvers")
-        void shouldApplyTagResolvers() {
-            String raw = "Time: <time>";
-            TagResolver resolver = Placeholder.parsed("time", "100");
-            Component result = parser.parse(raw, Map.of(), resolver);
-            String resultString = PLAIN_TEXT.serialize(result);
-            assertTrue(resultString.contains("100"));
+        @DisplayName("should convert backslash-n escapes to real newlines")
+        void shouldConvertNewlineEscapes() {
+            Component result = parser.parse("one\\ntwo", Map.of());
+            assertEquals("one\ntwo", PLAIN_TEXT.serialize(result));
+        }
+
+        @Test
+        @DisplayName("should resolve color tags inside placeholder values")
+        void shouldResolveColorsInValues() {
+            Component result = parser.parse("Hi {name}", Map.of("name", "{hl}Steve"));
+            String serialized = MINI_MESSAGE.serialize(result);
+            assertTrue(serialized.contains("#ebf1f2"));
+            assertTrue(PLAIN_TEXT.serialize(result).contains("Steve"));
         }
     }
 }
