@@ -12,3 +12,29 @@ configurations {
         exclude group: 'io.leangen.geantyref'
     }
 }
+
+// PlaceholderAPI ships compileOnly via plugin-conventions; tests need it too
+// to instantiate the expansion (same version as the main classpath).
+dependencies {
+    testImplementation 'me.clip:placeholderapi:2.11.6'
+}
+
+// plugin-conventions only expands plugin.yml, but JTemplate declares its
+// metadata (including permissions) in paper-plugin.yml, so expand the same
+// gradle.properties there.
+tasks.named('processResources') {
+    String paperApi = project.property('paperApiVersion')
+    Map<String, Object> pluginProperties = [
+            version    : project.version,
+            name       : project.property('pluginName'),
+            main       : project.property('pluginMain'),
+            apiVersion : paperApi.split('\\.build\\.')[0],
+            author     : project.property('pluginAuthor'),
+            description: project.property('pluginDescription'),
+            website    : project.property('pluginWebsite')
+    ]
+    inputs.properties(pluginProperties)
+    filesMatching('paper-plugin.yml') {
+        expand(pluginProperties)
+    }
+}
