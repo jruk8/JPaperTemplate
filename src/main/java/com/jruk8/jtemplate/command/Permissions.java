@@ -35,6 +35,11 @@ public final class Permissions {
      */
     public static final String VERSION = "jtemplate.version";
 
+    /**
+     * Show or set your own language.
+     */
+    public static final String LANGUAGE = "jtemplate.language";
+
     private Permissions() {
     }
 }

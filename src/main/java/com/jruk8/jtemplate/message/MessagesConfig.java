@@ -13,9 +13,9 @@ import lombok.Setter;
  * numbers, player names and similar values, {error} for errors. Commands
  * insert runtime values through {bracket} placeholders: {version},
  * {authors}, {time}, {syntax}, {description}, {latest}, {current}, {url},
- * {modrinth-url}, {permission}, {modrinth}, {github}, {discord} and
- * {donate}. Angle brackets are reserved for raw MiniMessage, and \n
- * breaks the line.
+ * {modrinth-url}, {permission}, {input}, {name}, {codes}, {modrinth},
+ * {github}, {discord} and {donate}. Angle brackets are reserved for raw
+ * MiniMessage, and \n breaks the line.
  */
 @Getter
 @Setter
@@ -62,6 +62,48 @@ public class MessagesConfig extends OkaeriConfig {
 
         @Comment("Sent when console runs a command without a target selector")
         private String consoleNeedsTarget = "{prefix}{error}Console must specify a target.";
+
+        @Comment("Sent when console runs a player-only command")
+        private String playerOnly = "{prefix}{error}Only players can use this command.";
+
+        @Comment("Modrinth link button (use {url})")
+        private String linkModrinth = "<click:open_url:'{url}'>"
+                + "<hover:show_text:'<#5ae663>Open on Modrinth'><#5ae663>Modrinth</hover></click>";
+
+        @Comment("GitHub link button (use {url})")
+        private String linkGithub = "<click:open_url:'{url}'>"
+                + "<hover:show_text:'<#5a88e6>Open on GitHub'><#5a88e6>GitHub</hover></click>";
+
+        @Comment("Discord link button (use {url})")
+        private String linkDiscord = "<click:open_url:'{url}'>"
+                + "<hover:show_text:'<#6258f2>Join the Discord'><#6258f2>Discord</hover></click>";
+
+        @Comment("Donate link button (use {url})")
+        private String linkDonate = "<click:open_url:'{url}'>"
+                + "<hover:show_text:'<#ff5e5b>Support on Ko-fi'><#ff5e5b>Donate</hover></click>";
+
+        @Comment("Separator between version authors")
+        private String versionComma = "<gray>,</gray>";
+
+        @Comment("'and' word between version authors")
+        private String versionAnd = "<gray>and</gray>";
+
+        @Comment("Language shown when pinned (use {name})")
+        private String languageShow = "{prefix}{plain}Language: {hl}{name}{plain}.";
+
+        @Comment("Language shown when following the client (use {name})")
+        private String languageShowAuto = "{prefix}{plain}Language follows your client: {hl}{name}{plain}.";
+
+        @Comment("Sent when the language is pinned (use {name})")
+        private String languageSet = "{prefix}{plain}Language set to {hl}{name}{plain}. "
+                + "It will no longer follow your client.";
+
+        @Comment("Sent when the pin is cleared (use {name})")
+        private String languageAuto = "{prefix}{plain}Language follows your client again: {hl}{name}{plain}.";
+
+        @Comment("Sent for an unknown language (use {input} and {codes})")
+        private String languageUnknown = "{prefix}{error}Unknown language {hl}{input}{error}. "
+                + "Use {hl}{codes}{error} or {hl}auto{error}.";
     }
 
     @Comment("Prefix prepended to every message, trailing space included")
@@ -69,4 +111,25 @@ public class MessagesConfig extends OkaeriConfig {
 
     @Comment("Core plugin messages")
     private Core core = new Core();
+
+    @Comment("Help menu command descriptions")
+    private Help help = new Help();
+
+    @Getter
+    @Setter
+    @SuppressWarnings("FieldMayBeFinal")
+    public static class Help extends OkaeriConfig {
+
+        @Comment("Help description of the help command")
+        private String help = "Shows this help menu.";
+
+        @Comment("Help description of the version command")
+        private String version = "Shows the plugin version.";
+
+        @Comment("Help description of the reload command")
+        private String reload = "Reloads the plugin configuration.";
+
+        @Comment("Help description of the language command")
+        private String language = "Shows or sets your language.";
+    }
 }

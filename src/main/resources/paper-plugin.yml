@@ -34,3 +34,6 @@ permissions:
   jtemplate.version:
     description: View the JTemplate version.
     default: true
+  jtemplate.language:
+    description: Show or set your own language with /jtemplate language.
+    default: true
