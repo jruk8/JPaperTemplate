@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Lataus valmis. {plain}Komentojen nimien muutokset vaativat palvelimen uudelleenkäynnistyksen."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Apua:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Yksikään komento ei vastaa hakua."
+  helpNoCommands: "{prefix}{plain}Sinulle ei ole saatavilla yhtään komentoa."
   versionSuccess: "\\n{prefix}{brand}Versio {hl}{version}\\n{brand}» {hl}Tekijät: {plain}{authors}\\n{brand}» {hl}Linkit: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} on saatavilla (käytössä {hl}{current}{brand}).\\n{brand}» {hl}Päivitä: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Sinulla ei ole lupaa {hl}'{permission}'{error} käyttää tätä komentoa."

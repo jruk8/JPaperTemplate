@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Načítanie dokončené. {plain}Zmeny názvov príkazov vyžadujú reštart servera."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Pomoc:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Žiadny príkaz nezodpovedá tejto požiadavke."
+  helpNoCommands: "{prefix}{plain}Nie sú pre teba k dispozícii žiadne príkazy."
   versionSuccess: "\\n{prefix}{brand}Verzia {hl}{version}\\n{brand}» {hl}Autori: {plain}{authors}\\n{brand}» {hl}Odkazy: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} je k dispozícii (teraz {hl}{current}{brand}).\\n{brand}» {hl}Aktualizácia: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Chýba ti oprávnenie {hl}'{permission}'{error} pre tento príkaz."

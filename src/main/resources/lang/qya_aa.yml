@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Reload complete. {plain}Command name changes require a server restart."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Counsel:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}No commands match that seeking."
+  helpNoCommands: "{prefix}{plain}No commands lie open to thee."
   versionSuccess: "\\n{prefix}{brand}Version {hl}{version}\\n{brand}» {hl}Wrought by: {plain}{authors}\\n{brand}» {hl}Paths: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} has dawned (thou bearest {hl}{current}{brand}).\\n{brand}» {hl}Ascend: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Thou lackest the permission {hl}'{permission}'{error} to wield this command."

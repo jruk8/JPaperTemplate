@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Przeładowanie zakończone. {plain}Zmiany nazw komend wymagają restartu serwera."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Pomoc:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Żadna komenda nie pasuje do tego zapytania."
+  helpNoCommands: "{prefix}{plain}Brak komend dostępnych dla ciebie."
   versionSuccess: "\\n{prefix}{brand}Wersja {hl}{version}\\n{brand}» {hl}Autorzy: {plain}{authors}\\n{brand}» {hl}Linki: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} jest dostępne (obecna: {hl}{current}{brand}).\\n{brand}» {hl}Aktualizacja: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Brakuje ci uprawnienia {hl}'{permission}'{error} do tej komendy."

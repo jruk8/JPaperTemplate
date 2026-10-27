@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Recarga completa. {plain}Los cambios de nombres de comandos necesitan reiniciar el servidor."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Ayuda:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Ningún comando coincide con esa búsqueda."
+  helpNoCommands: "{prefix}{plain}No hay comandos disponibles para ti."
   versionSuccess: "\\n{prefix}{brand}Versión {hl}{version}\\n{brand}» {hl}Autores: {plain}{authors}\\n{brand}» {hl}Enlaces: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} está disponible (actual: {hl}{current}{brand}).\\n{brand}» {hl}Actualiza: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}No tienes el permiso {hl}'{permission}'{error} para usar este comando."

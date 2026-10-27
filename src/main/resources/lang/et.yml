@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Uuesti laadimine valmis. {plain}Muudetud käsunimed vajavad taaskäivitust."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Abi:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Ükski käsk ei vasta sellele päringule."
+  helpNoCommands: "{prefix}{plain}Sulle pole saadaval ühtegi käsku."
   versionSuccess: "\\n{prefix}{brand}Versioon {hl}{version}\\n{brand}» {hl}Autorid: {plain}{authors}\\n{brand}» {hl}Lingid: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} on väljas (jookseb {hl}{current}{brand}).\\n{brand}» {hl}Uuenda: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Sul puudub luba {hl}'{permission}'{error} selle käsu jaoks."

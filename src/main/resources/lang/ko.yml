@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}리로드 완료.{plain}명령어 이름 변경은 서버 재시작이 필요합니다."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} 도움말:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}쿼리와 일치하는 명령어가 없습니다."
+  helpNoCommands: "{prefix}{plain}사용 가능한 명령어가 없습니다."
   versionSuccess: "\\n{prefix}{brand}버전 {hl}{version}\\n{brand}» {hl}제작자: {plain}{authors}\\n{brand}» {hl}링크: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} 사용 가능(현재 {hl}{current}{brand}).\\n{brand}» {hl}업데이트: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}이 명령어를 사용할 권한 {hl}'{permission}'{error}이(가) 없습니다."

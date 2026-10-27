@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Pemuatan semula selesai. {plain}Perubahan nama arahan perlu mula semula server."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Bantuan:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Tiada perintah sepadan dengan pertanyaan itu."
+  helpNoCommands: "{prefix}{plain}Tiada perintah tersedia untukmu."
   versionSuccess: "\\n{prefix}{brand}Versi {hl}{version}\\n{brand}» {hl}Penulis: {plain}{authors}\\n{brand}» {hl}Pautan: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} tersedia (berjalan {hl}{current}{brand}).\\n{brand}» {hl}Kemas kini: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Awak tiada keizinan {hl}'{permission}'{error} untuk arahan ini."

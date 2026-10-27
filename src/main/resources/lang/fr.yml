@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Rechargement terminé. {plain}Les noms de commandes modifiés exigent un redémarrage."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Aide :"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Aucune commande ne correspond à cette recherche."
+  helpNoCommands: "{prefix}{plain}Aucune commande n'est disponible pour toi."
   versionSuccess: "\\n{prefix}{brand}Version {hl}{version}\\n{brand}» {hl}Auteurs : {plain}{authors}\\n{brand}» {hl}Liens : {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} est disponible (actuelle : {hl}{current}{brand}).\\n{brand}» {hl}Mise à jour : {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Il te manque la permission {hl}'{permission}'{error} pour cette commande."

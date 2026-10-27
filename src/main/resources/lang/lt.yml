@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Perkrovimas baigtas. {plain}Pakeisti komandų pavadinimai reikalauja restarto."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Pagalba:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Jokia komanda neatitinka šios užklausos."
+  helpNoCommands: "{prefix}{plain}Tau nėra prieinamų komandų."
   versionSuccess: "\\n{prefix}{brand}Versija {hl}{version}\\n{brand}» {hl}Autoriai: {plain}{authors}\\n{brand}» {hl}Nuorodos: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} jau yra (veikia {hl}{current}{brand}).\\n{brand}» {hl}Atnaujink: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Tau trūksta leidimo {hl}'{permission}'{error} šiai komandai."

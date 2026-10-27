@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Yükləmə tamamlandı. {plain}Komanda adlarının dəyişməsi restart tələb edir."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Kömək:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Heç bir əmr bu sorğuya uyğun gəlmir."
+  helpNoCommands: "{prefix}{plain}Sənin üçün əlçatan əmr yoxdur."
   versionSuccess: "\\n{prefix}{brand}Versiya {hl}{version}\\n{brand}» {hl}Müəlliflər: {plain}{authors}\\n{brand}» {hl}Keçidlər: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} çıxıb (işləyir {hl}{current}{brand}).\\n{brand}» {hl}Yenilə: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Bu əmr üçün {hl}'{permission}'{error} icazən çatışmır."

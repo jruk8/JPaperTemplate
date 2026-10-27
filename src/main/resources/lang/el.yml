@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Η επαναφόρτωση ολοκληρώθηκε. {plain}Οι αλλαγές ονομάτων εντολών θέλουν επανεκκίνηση."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Βοήθεια:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Καμία εντολή δεν ταιριάζει με αυτό το ερώτημα."
+  helpNoCommands: "{prefix}{plain}Δεν υπάρχουν διαθέσιμες εντολές για εσένα."
   versionSuccess: "\\n{prefix}{brand}Έκδοση {hl}{version}\\n{brand}» {hl}Συγγραφείς: {plain}{authors}\\n{brand}» {hl}Σύνδεσμοι: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} διαθέσιμο (τρέχει {hl}{current}{brand}).\\n{brand}» {hl}Ενημέρωση: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Σου λείπει η άδεια {hl}'{permission}'{error} για αυτή την εντολή."

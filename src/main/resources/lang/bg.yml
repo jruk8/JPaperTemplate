@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Презареждането завърши. {plain}Промените в имената на команди изискват рестарт."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Помощ:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Нито една команда не отговаря на това търсене."
+  helpNoCommands: "{prefix}{plain}Няма налични команди за теб."
   versionSuccess: "\\n{prefix}{brand}Версия {hl}{version}\\n{brand}» {hl}Автори: {plain}{authors}\\n{brand}» {hl}Връзки: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} е налична (текуща {hl}{current}{brand}).\\n{brand}» {hl}Обнови: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Липсва ти правото {hl}'{permission}'{error} за тази команда."

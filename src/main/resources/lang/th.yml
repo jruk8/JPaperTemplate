@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}โหลดใหม่เสร็จแล้ว {plain}การเปลี่ยนชื่อคำสั่งต้องรีสตาร์ทเซิร์ฟเวอร์"
   helpHeader: "\\n{prefix}{brand}JTemplate {version} วิธีใช้:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}ไม่มีคำสั่งใดตรงกับคำค้น"
+  helpNoCommands: "{prefix}{plain}ไม่มีคำสั่งที่ใช้ได้สำหรับคุณ"
   versionSuccess: "\\n{prefix}{brand}เวอร์ชัน {hl}{version}\\n{brand}» {hl}ผู้สร้าง: {plain}{authors}\\n{brand}» {hl}ลิงก์: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} ออกแล้ว (ใช้ {hl}{current}{brand} อยู่)\\n{brand}» {hl}อัปเดต: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}คุณไม่มีสิทธิ์ {hl}'{permission}'{error} สำหรับคำสั่งนี้"

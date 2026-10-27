@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Endurhleðslu lokið. {plain}Breytt skipananöfn þurfa endurræsingu."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Hjálp:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Engar skipanir passa við þá leit."
+  helpNoCommands: "{prefix}{plain}Engar skipanir eru í boði fyrir þig."
   versionSuccess: "\\n{prefix}{brand}Útgáfa {hl}{version}\\n{brand}» {hl}Höfundar: {plain}{authors}\\n{brand}» {hl}Tenglar: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} er komið út (keyrir {hl}{current}{brand}).\\n{brand}» {hl}Uppfærðu: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Þig vantar heimildina {hl}'{permission}'{error} fyrir þessa skipun."

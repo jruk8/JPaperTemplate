@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Reload dun. {plain}Kommand naym chaynges need servr restrat."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Halp:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}No kommandz match dat kwery."
+  helpNoCommands: "{prefix}{plain}No kommandz can u use. Sry."
   versionSuccess: "\\n{prefix}{brand}Vursin {hl}{version}\\n{brand}» {hl}Maked by: {plain}{authors}\\n{brand}» {hl}Linz: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} iz out (u has {hl}{current}{brand}).\\n{brand}» {hl}Upgraydd: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}U do not has {hl}'{permission}'{error} 2 use dis kommand."

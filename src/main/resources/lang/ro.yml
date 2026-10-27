@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Reîncărcare completă. {plain}Schimbările de nume de comenzi cer restart."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Ajutor:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Nicio comandă nu corespunde acestei căutări."
+  helpNoCommands: "{prefix}{plain}Nu există comenzi disponibile pentru tine."
   versionSuccess: "\\n{prefix}{brand}Versiunea {hl}{version}\\n{brand}» {hl}Autori: {plain}{authors}\\n{brand}» {hl}Linkuri: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} e disponibil (rulezi {hl}{current}{brand}).\\n{brand}» {hl}Actualizează: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Îți lipsește permisiunea {hl}'{permission}'{error} pentru comanda asta."

@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Pārlāde pabeigta. {plain}Mainīti komandu nosaukumi prasa restartu."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Palīdzība:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Neviena komanda neatbilst šim vaicājumam."
+  helpNoCommands: "{prefix}{plain}Tev nav pieejamu komandu."
   versionSuccess: "\\n{prefix}{brand}Versija {hl}{version}\\n{brand}» {hl}Autori: {plain}{authors}\\n{brand}» {hl}Saites: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} ir pieejams (darbojas {hl}{current}{brand}).\\n{brand}» {hl}Atjaunini: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Tev trūkst atļaujas {hl}'{permission}'{error} šai komandai."

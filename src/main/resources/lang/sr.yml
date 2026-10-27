@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Учитавање готово. {plain}Промене назива команди траже рестарт."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Помоћ:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Nijedna komanda se ne poklapa sa ovim upitom."
+  helpNoCommands: "{prefix}{plain}Nema dostupnih komandi za tebe."
   versionSuccess: "\\n{prefix}{brand}Верзија {hl}{version}\\n{brand}» {hl}Аутори: {plain}{authors}\\n{brand}» {hl}Линкови: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} је изашао (ради {hl}{current}{brand}).\\n{brand}» {hl}Ажурирај: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Недостаје ти дозвола {hl}'{permission}'{error} за ову команду."

@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Recàrrega completa. {plain}Els canvis de noms d'ordres necessiten reiniciar el servidor."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Ajuda:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Cap ordre coincideix amb aquesta cerca."
+  helpNoCommands: "{prefix}{plain}No hi ha ordres disponibles per a tu."
   versionSuccess: "\\n{prefix}{brand}Versió {hl}{version}\\n{brand}» {hl}Autors: {plain}{authors}\\n{brand}» {hl}Enllaços: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} disponible (actual: {hl}{current}{brand}).\\n{brand}» {hl}Actualitza: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Et falta el permís {hl}'{permission}'{error} per a aquesta ordre."

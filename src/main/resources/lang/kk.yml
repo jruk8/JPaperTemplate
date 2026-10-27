@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Жүктеу аяқталды. {plain}Команда атауларының өзгеруі рестартты талап етеді."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Көмек:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Ешбір пәрмен бұл сұранысқа сәйкес келмейді."
+  helpNoCommands: "{prefix}{plain}Саған қолжетімді пәрмендер жоқ."
   versionSuccess: "\\n{prefix}{brand}Нұсқа {hl}{version}\\n{brand}» {hl}Авторлар: {plain}{authors}\\n{brand}» {hl}Сілтемелер: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} шықты (жұмыс істеп тұр {hl}{current}{brand}).\\n{brand}» {hl}Жаңарт: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Бұл команда үшін {hl}'{permission}'{error} рұқсатың жетіспейді."

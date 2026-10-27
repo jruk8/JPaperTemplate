@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Yeniden yükleme tamamlandı. {plain}Komut adı değişiklikleri sunucu yeniden başlatması gerektirir."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Yardım:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Hiçbir komut bu sorguyla eşleşmiyor."
+  helpNoCommands: "{prefix}{plain}Senin için kullanılabilir komut yok."
   versionSuccess: "\\n{prefix}{brand}Sürüm {hl}{version}\\n{brand}» {hl}Yazarlar: {plain}{authors}\\n{brand}» {hl}Bağlantılar: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} mevcut (kurulu: {hl}{current}{brand}).\\n{brand}» {hl}Güncelle: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Bu komutu kullanmak için {hl}'{permission}'{error} iznin yok."

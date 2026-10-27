@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}リロード完了。{plain}コマンド名の変更にはサーバーの再起動が必要です。"
   helpHeader: "\\n{prefix}{brand}JTemplate {version} ヘルプ："
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}：{description}"
+  helpNoMatch: "{prefix}{plain}クエリに一致するコマンドがありません。"
+  helpNoCommands: "{prefix}{plain}利用可能なコマンドがありません。"
   versionSuccess: "\\n{prefix}{brand}バージョン {hl}{version}\\n{brand}» {hl}作者：{plain}{authors}\\n{brand}» {hl}リンク：{modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} が利用可能です（現在 {hl}{current}{brand}）。\\n{brand}» {hl}更新：{modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}このコマンドを使う権限 {hl}'{permission}'{error} がありません。"

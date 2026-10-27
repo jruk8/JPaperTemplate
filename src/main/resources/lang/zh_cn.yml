@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}重载完成。{plain}命令名称更改需要重启服务器。"
   helpHeader: "\\n{prefix}{brand}JTemplate {version} 帮助："
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}：{description}"
+  helpNoMatch: "{prefix}{plain}没有命令符合该查询。"
+  helpNoCommands: "{prefix}{plain}没有可用的命令。"
   versionSuccess: "\\n{prefix}{brand}版本 {hl}{version}\\n{brand}» {hl}作者：{plain}{authors}\\n{brand}» {hl}链接：{modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} 可用（当前 {hl}{current}{brand}）。\\n{brand}» {hl}更新：{modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}你没有权限 {hl}'{permission}'{error} 来使用此命令。"

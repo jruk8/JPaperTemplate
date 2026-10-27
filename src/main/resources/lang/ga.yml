@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Athlódáil críochnaithe. {plain}Teastaíonn atosú ón fhreastalaí athruithe ainmneacha orduithe."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Cabhair:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Níl aon ordú ag teacht leis an gceist sin."
+  helpNoCommands: "{prefix}{plain}Níl aon ordú ar fáil duit."
   versionSuccess: "\\n{prefix}{brand}Leagan {hl}{version}\\n{brand}» {hl}Údair: {plain}{authors}\\n{brand}» {hl}Naisc: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} ar fáil (ag rith {hl}{current}{brand}).\\n{brand}» {hl}Nuashonraigh: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Tá an cead {hl}'{permission}'{error} in easnamh ort don ordú seo."

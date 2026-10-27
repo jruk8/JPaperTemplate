@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Omladdning klar. {plain}Ändrade kommandonamn kräver en omstart."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Hjälp:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Inga kommandon matchar den sökningen."
+  helpNoCommands: "{prefix}{plain}Inga kommandon är tillgängliga för dig."
   versionSuccess: "\\n{prefix}{brand}Version {hl}{version}\\n{brand}» {hl}Författare: {plain}{authors}\\n{brand}» {hl}Länkar: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} finns ute (kör {hl}{current}{brand}).\\n{brand}» {hl}Uppdatera: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Du saknar behörigheten {hl}'{permission}'{error} för det här kommandot."

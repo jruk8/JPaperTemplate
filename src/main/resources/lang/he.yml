@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}הטעינה הושלמה. {plain}שינוי שמות פקודות דורש הפעלה מחדש."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} עזרה:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}אין פקודות שתואמות לחיפוש הזה."
+  helpNoCommands: "{prefix}{plain}אין פקודות זמינות עבורך."
   versionSuccess: "\\n{prefix}{brand}גרסה {hl}{version}\\n{brand}» {hl}יוצרים: {plain}{authors}\\n{brand}» {hl}קישורים: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} זמין (פועל {hl}{current}{brand}).\\n{brand}» {hl}עדכון: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}חסרה לך ההרשאה {hl}'{permission}'{error} לפקודה זו."

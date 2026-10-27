@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Բեռնումն ավարտվեց։ {plain}Հրամանների անունների փոփոխությունը պահանջում է վերագործարկում։"
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Օգնություն։"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Ոչ մի հրաման չի համապատասխանում այս հարցմանը։"
+  helpNoCommands: "{prefix}{plain}Քեզ համար հասանելի հրամաններ չկան։"
   versionSuccess: "\\n{prefix}{brand}Տարբերակ {hl}{version}\\n{brand}» {hl}Հեղինակներ։ {plain}{authors}\\n{brand}» {hl}Հղումներ։ {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} հասանելի է (աշխատում է {hl}{current}{brand})։\\n{brand}» {hl}Թարմացրու։ {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Քեզ պակասում է {hl}'{permission}'{error} թույլտվությունն այս հրամանի համար։"

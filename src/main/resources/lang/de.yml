@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Neuladen abgeschlossen. {plain}Geänderte Befehlsnamen brauchen einen Serverneustart."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Hilfe:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Keine Befehle passen zu dieser Suche."
+  helpNoCommands: "{prefix}{plain}Es sind keine Befehle für dich verfügbar."
   versionSuccess: "\\n{prefix}{brand}Version {hl}{version}\\n{brand}» {hl}Autoren: {plain}{authors}\\n{brand}» {hl}Links: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} ist verfügbar (installiert: {hl}{current}{brand}).\\n{brand}» {hl}Update: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Dir fehlt die Berechtigung {hl}'{permission}'{error} für diesen Befehl."

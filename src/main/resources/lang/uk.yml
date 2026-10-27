@@ -5,6 +5,8 @@ core:
   reloadRestartRequired: "{prefix}{hl}Перезавантаження завершено. {plain}Зміна імен команд вимагає перезапуску сервера."
   helpHeader: "\\n{prefix}{brand}JTemplate {version} Допомога:"
   helpEntryFormat: "{brand}» {hl}{syntax}{plain}: {description}"
+  helpNoMatch: "{prefix}{plain}Жодна команда не відповідає цьому запиту."
+  helpNoCommands: "{prefix}{plain}Немає доступних для тебе команд."
   versionSuccess: "\\n{prefix}{brand}Версія {hl}{version}\\n{brand}» {hl}Автори: {plain}{authors}\\n{brand}» {hl}Посилання: {modrinth}{plain} | {github}{plain} | {donate}"
   updateAvailable: "\\n{prefix}{hl}JTemplate {latest}{brand} доступна (поточна {hl}{current}{brand}).\\n{brand}» {hl}Оновлення: {modrinth} {plain}| {github} {plain}| {discord}"
   noPermission: "{prefix}{error}Тобі бракує права {hl}'{permission}'{error} для цієї команди."
