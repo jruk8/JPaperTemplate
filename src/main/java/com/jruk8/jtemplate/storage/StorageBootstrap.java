@@ -3,7 +3,6 @@ package com.jruk8.jtemplate.storage;
 import com.jruk8.jtemplate.core.Bootstrap;
 import com.jruk8.jtemplate.core.Reloadable;
 import com.jruk8.jtemplate.config.PluginConfig;
-import lombok.Getter;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -16,8 +15,8 @@ import java.util.logging.Logger;
  */
 public final class StorageBootstrap implements Bootstrap, Reloadable {
 
-    @Getter
     private SqliteStorage storage;
+    private final SqliteStorage deadStorage;
     private final PluginConfig pluginConfig;
     private final File dataFolder;
     private final Logger logger;
@@ -26,6 +25,18 @@ public final class StorageBootstrap implements Bootstrap, Reloadable {
         this.pluginConfig = pluginConfig;
         this.dataFolder = dataFolder;
         this.logger = logger;
+        this.deadStorage = new SqliteStorage("jdbc:sqlite::memory:", logger);
+    }
+
+    /**
+     * Returns the live storage, or a never-opened instance while the
+     * database is unavailable (reads degrade to zero, writes are
+     * ignored), so holders never see null.
+     *
+     * @return the current storage
+     */
+    public SqliteStorage getStorage() {
+        return this.storage != null ? this.storage : this.deadStorage;
     }
 
     @Override

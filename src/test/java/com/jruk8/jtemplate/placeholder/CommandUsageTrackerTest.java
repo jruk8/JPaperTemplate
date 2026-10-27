@@ -23,7 +23,7 @@ class CommandUsageTrackerTest {
     void setUp() {
         storage = new SqliteStorage("jdbc:sqlite::memory:", Logger.getLogger("tracker-test"));
         assertTrue(storage.init());
-        tracker = new CommandUsageTracker(storage);
+        tracker = new CommandUsageTracker(() -> storage);
     }
 
     @AfterEach

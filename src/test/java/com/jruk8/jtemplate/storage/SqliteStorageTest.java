@@ -121,6 +121,33 @@ class SqliteStorageTest {
     }
 
     @Nested
+    @DisplayName("arbitrary values")
+    class ValueTests {
+
+        @Test
+        @DisplayName("should store and overwrite a player value")
+        void shouldStorePlayerValue() {
+            storage.setPlayerValue(STAT_KEY, firstPlayer, 7);
+
+            assertEquals(7, storage.playerTotal(STAT_KEY, firstPlayer));
+
+            storage.setPlayerValue(STAT_KEY, firstPlayer, 3);
+
+            assertEquals(3, storage.playerTotal(STAT_KEY, firstPlayer));
+        }
+
+        @Test
+        @DisplayName("should read a player value without a default")
+        void shouldReadPlayerValue() {
+            assertTrue(storage.playerValue(STAT_KEY, firstPlayer).isEmpty());
+
+            storage.setPlayerValue(STAT_KEY, firstPlayer, 5);
+
+            assertEquals(5, storage.playerValue(STAT_KEY, firstPlayer).orElseThrow());
+        }
+    }
+
+    @Nested
     @DisplayName("persistence")
     class PersistenceTests {
 

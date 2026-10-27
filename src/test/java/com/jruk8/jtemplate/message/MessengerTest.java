@@ -2,6 +2,7 @@ package com.jruk8.jtemplate.message;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -95,6 +97,34 @@ class MessengerTest {
             verify(messageParser, times(1))
                 .parse(eq(rawMessage), eq(Map.of()));
             verify(sender, times(1)).sendMessage(parsed);
+        }
+    }
+
+    @Nested
+    @DisplayName("sendActionBar()")
+    class ActionBarTests {
+
+        @Test
+        @DisplayName("should show the parsed text on player actionbars")
+        void shouldShowActionBarToPlayers() {
+            var player = mock(Player.class);
+            String rawMessage = "{prefix}Hello";
+            Component parsed = Component.text("Hello");
+
+            when(messageParser.parse(eq(rawMessage), eq(Map.of())))
+                .thenReturn(parsed);
+
+            messenger.sendActionBar(player, rawMessage, Map.of());
+
+            verify(player, times(1)).sendActionBar(parsed);
+        }
+
+        @Test
+        @DisplayName("should ignore non-player senders")
+        void shouldIgnoreNonPlayers() {
+            messenger.sendActionBar(sender, "{prefix}Hello", Map.of());
+
+            verifyNoInteractions(messageParser, sender);
         }
     }
 }

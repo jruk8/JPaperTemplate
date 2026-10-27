@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +52,9 @@ public final class SqliteStorage implements AutoCloseable {
             "UPDATE " + TABLE_PLAYER_STATS + " SET value = value + 1 WHERE key = ? AND player = ?";
     private static final String SELECT_PLAYER =
             "SELECT value FROM " + TABLE_PLAYER_STATS + " WHERE key = ? AND player = ?";
+    private static final String UPSERT_PLAYER =
+            "INSERT INTO " + TABLE_PLAYER_STATS + " (key, player, value) VALUES (?, ?, ?)"
+                    + " ON CONFLICT (key, player) DO UPDATE SET value = excluded.value";
 
     private static final String INSERT_OR_IGNORE_GLOBAL =
             "INSERT OR IGNORE INTO " + TABLE_GLOBAL_STATS + " (key, value) VALUES (?, 0)";
@@ -160,6 +164,50 @@ public final class SqliteStorage implements AutoCloseable {
         } catch (SQLException e) {
             this.logger.log(Level.WARNING, "Failed to read player stat '" + key + "'", e);
             return 0;
+        }
+    }
+
+    /**
+     * Stores an arbitrary per-player integer, creating the row if absent.
+     *
+     * @param key    the stat name
+     * @param player the player owning the value
+     * @param value  the value to store
+     */
+    public synchronized void setPlayerValue(String key, UUID player, int value) {
+        if (!isReady()) {
+            return;
+        }
+        try (PreparedStatement statement = this.connection.prepareStatement(UPSERT_PLAYER)) {
+            statement.setString(1, key);
+            statement.setString(2, player.toString());
+            statement.setInt(3, value);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            this.logger.log(Level.WARNING, "Failed to store player value '" + key + "'", e);
+        }
+    }
+
+    /**
+     * Reads a per-player value without a default.
+     *
+     * @param key    the stat name
+     * @param player the player owning the value
+     * @return the stored value, or empty when no row exists
+     */
+    public synchronized Optional<Integer> playerValue(String key, UUID player) {
+        if (!isReady()) {
+            return Optional.empty();
+        }
+        try (PreparedStatement statement = this.connection.prepareStatement(SELECT_PLAYER)) {
+            statement.setString(1, key);
+            statement.setString(2, player.toString());
+            try (ResultSet results = statement.executeQuery()) {
+                return results.next() ? Optional.of(results.getInt(1)) : Optional.empty();
+            }
+        } catch (SQLException e) {
+            this.logger.log(Level.WARNING, "Failed to read player value '" + key + "'", e);
+            return Optional.empty();
         }
     }
 

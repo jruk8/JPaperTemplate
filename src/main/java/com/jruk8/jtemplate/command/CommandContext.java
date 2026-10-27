@@ -93,7 +93,7 @@ public record CommandContext(
     }
 
     /**
-     * Sends a reload message to the executor and plays the reload sound.
+     * Sends a reload message to the executor and plays the celebration sound.
      * @param sender The command sender to send the message to and play the sound for.
      * @param messageSelector Function to select the message string from {@link MessagesConfig}.
      * @param placeholders Key-value pairs for {bracket} text replacements.
@@ -104,11 +104,11 @@ public record CommandContext(
             Map<String, String> placeholders
     ) {
         messenger.send(sender.getSender(), messageSelector.apply(messages), placeholders);
-        soundPlayer.play(sender.getSender(), sounds.getReload());
+        soundPlayer.play(sender.getSender(), sounds.getCelebration());
     }
 
     /**
-     * Sends a version message to the executor and plays the neutral sound.
+     * Sends a version message to the executor and plays the celebration sound.
      * @param sender The command sender to send the message to and play the sound for.
      * @param messageSelector Function to select the message string from {@link MessagesConfig}.
      * @param placeholders Key-value pairs for {bracket} text replacements.
@@ -119,15 +119,15 @@ public record CommandContext(
             Map<String, String> placeholders
     ) {
         messenger.send(sender.getSender(), messageSelector.apply(messages), placeholders);
-        soundPlayer.play(sender.getSender(), sounds.getNeutral());
+        soundPlayer.play(sender.getSender(), sounds.getCelebration());
     }
 
     /**
-     * Plays the help sound for the executor.
+     * Plays the celebration sound for the executor.
      * @param sender The command sender to play the sound for.
      */
     public void playHelp(CommandSourceStack sender) {
-        soundPlayer.play(sender.getSender(), sounds.getHelp());
+        soundPlayer.play(sender.getSender(), sounds.getCelebration());
     }
 
     /**
@@ -142,7 +142,7 @@ public record CommandContext(
             Map<String, String> placeholders
     ) {
         messenger.send(sender.getSender(), messageSelector.apply(messages), placeholders);
-        soundPlayer.play(sender.getSender(), sounds.getError());
+        soundPlayer.play(sender.getSender(), sounds.getAngry());
     }
 
     /**

@@ -2,6 +2,7 @@ package com.jruk8.jtemplate.message;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Map;
 
@@ -50,5 +51,24 @@ public final class Messenger {
      */
     public void send(CommandSender sender, String rawMessage) {
         send(sender, rawMessage, Map.of());
+    }
+
+    /**
+     * Parses a raw string with {bracket} placeholders, then shows it on the
+     * player's actionbar. Non-player senders are silently ignored.
+     *
+     * @param sender             the recipient of the actionbar
+     * @param rawMessage         the unparsed message string; if null or empty, operation is ignored
+     * @param stringPlaceholders key-value pairs for {bracket} text replacements
+     */
+    public void sendActionBar(CommandSender sender,
+                              String rawMessage,
+                              Map<String, String> stringPlaceholders) {
+        if (!(sender instanceof Player player) || rawMessage == null || rawMessage.isEmpty()) {
+            return;
+        }
+
+        Component text = messageParser.parse(rawMessage, stringPlaceholders);
+        player.sendActionBar(text);
     }
 }

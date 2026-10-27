@@ -112,7 +112,7 @@ public final class JTemplatePlugin extends JavaPlugin {
         this.storageBootstrap = new StorageBootstrap(configRegistrar.getPluginConfig(), getDataFolder(), logger);
         this.storageBootstrap.register();
         reloader.register(this.storageBootstrap);
-        var usageTracker = new CommandUsageTracker(this.storageBootstrap.getStorage());
+        var usageTracker = new CommandUsageTracker(this.storageBootstrap::getStorage);
 
         // Initialize PlaceholderAPI placeholders
         var placeholdersBootstrap = new PlaceholdersBootstrap(usageTracker, this, logger);

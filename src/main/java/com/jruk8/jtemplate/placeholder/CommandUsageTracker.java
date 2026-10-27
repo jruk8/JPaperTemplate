@@ -3,6 +3,7 @@ package com.jruk8.jtemplate.placeholder;
 import com.jruk8.jtemplate.storage.SqliteStorage;
 
 import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
  * Domain service for the command usage statistics behind the
@@ -16,9 +17,13 @@ public final class CommandUsageTracker {
      */
     public static final String USES_KEY = "jtemplate_uses";
 
-    private final SqliteStorage storage;
+    private final Supplier<SqliteStorage> storage;
 
-    public CommandUsageTracker(SqliteStorage storage) {
+    /**
+     * @param storage resolves the live storage; reloads swap the instance,
+     * so holders must not keep a direct reference
+     */
+    public CommandUsageTracker(Supplier<SqliteStorage> storage) {
         this.storage = storage;
     }
 
@@ -28,15 +33,15 @@ public final class CommandUsageTracker {
      * @param player the player that executed the command
      */
     public void recordUse(UUID player) {
-        this.storage.increment(USES_KEY, player);
-        this.storage.incrementGlobal(USES_KEY);
+        this.storage.get().increment(USES_KEY, player);
+        this.storage.get().incrementGlobal(USES_KEY);
     }
 
     public int playerUses(UUID player) {
-        return this.storage.playerTotal(USES_KEY, player);
+        return this.storage.get().playerTotal(USES_KEY, player);
     }
 
     public int globalUses() {
-        return this.storage.globalTotal(USES_KEY);
+        return this.storage.get().globalTotal(USES_KEY);
     }
 }

@@ -26,17 +26,11 @@ public class SoundsConfig extends OkaeriConfig {
     @Comment("Neutral feedback for ordinary commands, heard by the executor and every affected player.")
     private Sound neutral = new Sound(true, "entity.breeze.land", 0.8f, 0.7f);
 
-    @Comment("Feedback for state resets, heard by the executor and every affected player.")
-    private Sound reset = new Sound(true, "block.azalea_leaves.place", 0.8f, 0.7f);
-
-    @Comment("Sound played when the configuration is reloaded.")
-    private Sound reload = new Sound(true, "block.azalea_leaves.place", 0.8f, 0.7f);
-
-    @Comment("Sound played when the help menu is shown.")
-    private Sound help = new Sound(true, "block.azalea_leaves.place", 0.8f, 0.7f);
+    @Comment("Sound played for reloads, help and version output.")
+    private Sound celebration = new Sound(true, "block.azalea_leaves.place", 0.8f, 0.7f);
 
     @Comment("Sound played when a command fails (invalid input, missing permission, failed reload).")
-    private Sound error = new Sound(true, "block.note_block.bass", 1.0f, 1.0f);
+    private Sound angry = new Sound(true, "block.note_block.bass", 1.0f, 1.0f);
 
     @Getter
     @Setter
