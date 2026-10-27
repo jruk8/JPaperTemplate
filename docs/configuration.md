@@ -84,6 +84,8 @@ brackets are raw MiniMessage, and `\n` breaks the line:
   a restart to apply.
 - `core.helpHeader` / `core.helpEntryFormat` » help command layout
   (use `{version}` for the header; `{syntax}` and `{description}` per entry).
+- `core.helpNoMatch` » help query matched no commands.
+- `core.helpNoCommands` » no commands are visible to the sender.
 - `core.versionSuccess` » version command output (use `{version}` and
   `{authors}`; linked author names arrive pre-formatted).
 - `core.updateAvailable` » update notice (use `{latest}`, `{current}`,
