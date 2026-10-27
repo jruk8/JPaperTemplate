@@ -14,6 +14,6 @@ icon: material/key
 
 Permissions are checked on the command nodes with Brigadier `requires()`
 predicates (see `CommandContext.requiresPermission`); the node constants
-live in `TemplatePermissions`. Commands that target other players check
+live in `Permissions`. Commands that target other players check
 `jtemplate.other` through `TargetSelector`. See
-[commands.md](commands.md).
+[commands.md](../basics/commands.md).

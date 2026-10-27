@@ -4,7 +4,7 @@ icon: material/variable
 
 # Placeholders
 
-PlaceholderAPI support is handled by the `core.placeholders` module. When
+PlaceholderAPI support is handled by the `placeholder` module. When
 PlaceholderAPI is installed, the plugin registers an expansion with the
 identifier `jtemplate`. The expansion is re-registered on
 `/jtemplate reload`, and unregistered when the plugin disables.
@@ -37,4 +37,4 @@ if ("my_stat".equals(params)) {
 Provider the value through an injected service and store it in SQLite if it
 should survive restarts. Registered placeholders are announced to
 PlaceholderAPI via `getPlaceholders()`. A full walkthrough (including new
-stat keys) lives in [api.md](api.md).
+stat keys) lives in [extending.md](extending.md).

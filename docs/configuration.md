@@ -94,11 +94,8 @@ namespaced `sound` key, `pitch` and `volume`
 
 - `neutral` » neutral feedback for ordinary commands, heard by the executor
   and every affected player.
-- `reset` » feedback for state resets, heard by the executor and every
-  affected player.
-- `reload` » played when the configuration is reloaded.
-- `help` » played when the help menu is shown.
-- `error` » played on failed commands (invalid input, missing permission,
+- `celebration` » played for reloads, help and version output.
+- `angry` » played on failed commands (invalid input, missing permission,
   failed reload).
 
 ## Storage (SQLite)

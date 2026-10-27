@@ -57,11 +57,14 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting Started: getting-started.md
-  - Commands: commands.md
-  - Permissions: permissions.md
-  - Configuration: configuration.md
-  - Placeholders: placeholders.md
-  - Plugin API: api.md
+  - Basics:
+      - Commands: basics/commands.md
+  - Configuration:
+      - Overview: configuration.md
+  - Advanced:
+      - Permissions: advanced/permissions.md
+      - Placeholders: advanced/placeholders.md
+      - Extending: advanced/extending.md
 
 extra:
   discord_url: https://discord.com/invite/hkWmCVmWDC

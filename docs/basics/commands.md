@@ -5,7 +5,7 @@ icon: material/console
 # Commands
 
 All commands are available under `/jtemplate` and its aliases (default
-`/jt`, see `aliases` in [configuration.md](configuration.md)). Running
+`/jt`, see `aliases` in [configuration.md](../configuration.md)). Running
 the root with no arguments shows the help listing.
 
 | Command | Description | Permission |
@@ -24,12 +24,12 @@ the root with no arguments shows the help listing.
   settings. Changed root labels need a restart; `reload` says so when it
   detects a change.
 
-See [permissions.md](permissions.md) for defaults.
+See [permissions.md](../advanced/permissions.md) for defaults.
 
 ## Adding a Command
 
-1. Create a command class in a new subpackage of `core.commands` (e.g.
-   `core.commands.user.fun`) that builds a Brigadier node with
+1. Create a command class in a new subpackage of `command` (e.g.
+   `command.user.fun`) that builds a Brigadier node with
    `Commands.literal(...)`, gates it with `requires()`, and runs its logic
    in `executes(...)`.
 2. Attach the node to the root in the matching registrar
@@ -37,7 +37,7 @@ See [permissions.md](permissions.md) for defaults.
    `root.then(new MyCommand(...).node())`, injecting only the services it
    needs (commonly `CommandContext`).
 3. Declare the permission in `paper-plugin.yml` (with a constant in
-   `TemplatePermissions`), document it in [permissions.md](permissions.md)
+   `Permissions`), document it in [permissions.md](../advanced/permissions.md)
    and add a `HelpEntry` so the command shows up in `/jtemplate help`.
 
-See [api.md](api.md) for the full walkthrough.
+See [extending.md](../advanced/extending.md) for the full walkthrough.

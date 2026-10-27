@@ -39,10 +39,10 @@ couple of times, install PlaceholderAPI, and try
    *YourName* (packages, commands, placeholder identifiers, database name,
    docs). Then update `gradle.properties` and `settings.gradle`.
 2. Delete or adapt the template modules you do not need; see
-   [Extending the template](api.md) for what plugs in where.
+   [Extending the template](advanced/extending.md) for what plugs in where.
 
 ## Next Steps
 
-- [Commands](commands.md)
+- [Commands](basics/commands.md)
 - [Configuration](configuration.md)
-- [Placeholders](placeholders.md)
+- [Placeholders](advanced/placeholders.md)

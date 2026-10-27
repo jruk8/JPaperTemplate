@@ -14,7 +14,7 @@ style, and documentation expectations.
     finishing any change.
   - `./gradlew test` runs only the tests while iterating; narrow to
     one suite with `./gradlew test --tests
-    "com.jruk8.jtemplate.core.MyTest"`.
+    "com.jruk8.jtemplate.command.MyTest"`.
   - The plugin jar lands in `build/libs/`.
 - **Test server:** there is no committed test server. Spin up a local
   [Paper 26.2+](https://papermc.io/downloads/paper) server, drop the
@@ -89,9 +89,9 @@ than one big one, and never push or tag unless asked.
 ## Documentation Expectations
 
 - Update `docs/` when adding or changing user-facing features.
-- Update `docs/commands.md` for new commands.
+- Update `docs/basics/commands.md` for new commands.
 - Update `docs/configuration.md` for new configuration options.
-- Update `docs/permissions.md` for new permissions.
+- Update `docs/advanced/permissions.md` for new permissions.
 - Register new pages in the `mkdocs.yml` nav so they appear on the
   site.
 - Keep documentation accurate and concise, and keep `README.md`

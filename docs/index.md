@@ -28,11 +28,11 @@ framework.
 ## Documentation
 
 - [Getting Started](getting-started.md)
-- [Commands](commands.md)
-- [Permissions](permissions.md)
+- [Commands](basics/commands.md)
+- [Permissions](advanced/permissions.md)
 - [Configuration](configuration.md)
-- [Placeholders](placeholders.md)
-- [Extending the template](api.md)
+- [Placeholders](advanced/placeholders.md)
+- [Extending the template](advanced/extending.md)
 
 ## Build
 

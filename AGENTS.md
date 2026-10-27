@@ -16,27 +16,27 @@ graceful warning. Read this file first, then `docs/`.
 | `CONTRIBUTING.md` | Environment, style, tests, commits; the human-facing rules agents also follow |
 | `README.md` | What the template ships, in one page |
 | `docs/index.md` + `docs/getting-started.md` | Feature tour and first run |
-| `docs/commands.md` | The command surface new plugins extend |
+| `docs/basics/commands.md` | The command surface new plugins extend |
 | `docs/configuration.md` | Every config file and key |
-| `docs/permissions.md` | Permission nodes new commands must register |
-| `docs/api.md` | Where new code plugs in |
+| `docs/advanced/permissions.md` | Permission nodes new commands must register |
+| `docs/advanced/extending.md` | Where new code plugs in |
 | `mkdocs.yml` › `nav` | Where a new docs page plugs in |
 | `build.gradle` | Dependencies and the `paper-plugin.yml` expansion |
 
 ## 2. Repo map
 
 ```text
-src/main/java/com/jruk8/jtemplate/core/
+src/main/java/com/jruk8/jtemplate/
   JTemplatePlugin           composition root only: setupCoreModules() wires the registrars
-  Bootstrap/Reloadable      registrar contracts; Reloader re-runs every Reloadable
-  commands/                 Paper Brigadier nodes (Commands.literal/argument) + registrars
+  core/                     Bootstrap/Reloadable contracts, Reloader, metrics, banner
+  command/                  shared plumbing (CommandContext, CommandsRegistrar, Permissions)
     user/                   /jtemplate help + version (alias /jt)
     admin/reload/           /jtemplate reload
-    selectors/              TargetSelector, SelectorSuggestions, ValueSuggestions
-  configs/                  Okaeri schema (PluginConfig) + ConfigRegistrar loader
-  messages/                 MiniMessage parsing (MessageParser) + dispatch (Messenger)
-  sounds/                   config-driven playback (SoundPlayer, Adventure API only)
-  placeholders/             PlaceholderAPI expansion counting command executions
+    selector/               TargetSelector, SelectorSuggestions, ValueSuggestions, PlayerSelectorArgument
+  config/                   Okaeri schema (PluginConfig) + ConfigRegistrar loader
+  message/                  MiniMessage parsing (MessageParser) + dispatch (Messenger)
+  sound/                    config-driven playback (SoundPlayer, Adventure API only)
+  placeholder/              PlaceholderAPI expansion counting command executions
   storage/                  raw JDBC SQLite key/value counters (jtemplate.db)
   update/                   async GitHub update checker (service + HTTP port + notifier)
 src/main/resources/
@@ -47,7 +47,9 @@ docs/ + mkdocs.yml          Zensical site; CI deploys it from main
 
 **Seams are thin, services hold logic.** Commands only parse args and
 delegate; config parsing belongs in the schema/loaders, never in commands.
-Reuse an existing service before introducing a new one, match the sibling
+Storage holders resolve through `Supplier<SqliteStorage>` because reload
+swaps the instance. Reuse an existing service before introducing a new one,
+match the sibling
 pattern when the area has one, and avoid new static state: instances are
 created once and injected.
 
@@ -67,7 +69,7 @@ created once and injected.
    `mkdocs.yml` nav. Keep `README.md` short: it links out, it does not
    enumerate.
 4. **Commands serve console and players.** Support both senders unless
-   impossible, add a permission check plus a `permissions.md` row, and
+   impossible, add a permission check plus an `advanced/permissions.md` row, and
    keep tab completion working.
 5. **Messages go through the services.** All player and console text runs
    through `Messenger` and the `MessagesConfig` keys; all sounds run
@@ -95,7 +97,7 @@ created once and injected.
 ## 4. Before you finish a task
 
 ```sh
-./gradlew test --tests "com.jruk8.jtemplate.core.commands.selectors.TargetSelectorTest"  # focused suite while iterating
+./gradlew test --tests "com.jruk8.jtemplate.command.selector.TargetSelectorTest"  # focused suite while iterating
 ./gradlew test                                                                        # all tests before widening
 ./gradlew build                                                                       # full gate: tests + checkstyle
 ```
@@ -131,5 +133,5 @@ check as green.
 3. Point `GitHubReleaseHttp` at the new repo, `UpdateCheckService` at the
    new Modrinth slug, and `versionSuccess` at the new project links.
 4. Set the bStats plugin ID in `MetricsBootstrap`.
-5. Delete the template modules you do not need; see `docs/api.md` for
-   what plugs in where.
+5. Delete the template modules you do not need; see
+   `docs/advanced/extending.md` for what plugs in where.
