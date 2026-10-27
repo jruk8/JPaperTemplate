@@ -16,6 +16,7 @@ updateChecker:
   enabled: true
 aliases:
   - jt
+defaultLanguage: auto
 storage:
   dbFile: jtemplate.db
 colors:
@@ -41,6 +42,14 @@ Extra labels for the `/jtemplate` root command (`/jt` works out of the
 box). Running the root with no arguments shows the help listing. Blanks,
 duplicates and the `jtemplate` label itself are ignored. Applies on
 restart; `/jtemplate reload` reports when a restart is needed.
+
+### `defaultLanguage`
+
+Default language for players without a language pin: `auto` follows
+each player's client locale, any other [language key](#languages)
+forces that language. Pins always win; unknown keys warn and behave
+as `auto`. Takes effect on reload. Revoke `jtemplate.language` to
+strictly force one language server-wide.
 
 ### `storage`
 
@@ -113,6 +122,14 @@ all read `messages.yml`. Each used language seeds its `lang/<code>.yml`
 from the bundled translation on first use; the files stay
 admin-editable and overlay the English schema, so deleting a key (or a
 whole file) just reads English again.
+
+The `defaultLanguage` key in `config.yml` decides what unpinned
+players read: `auto` (the default) keeps following each player's
+client locale, while any other key forces that language on everyone
+without a pin; existing pins always win. Unknown keys warn in the
+console and behave as `auto`. To strictly force one language (e.g.
+for unique messages), set it there and revoke `jtemplate.language`
+with your permissions plugin so nobody can pin anything else.
 
 | Code | Language | Code | Language |
 | --- | --- | --- | --- |

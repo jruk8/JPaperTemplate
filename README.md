@@ -73,6 +73,7 @@ Find `config.yml`, `messages.yml` and `sounds.yml` in `plugins/JTemplate/`:
 
 - `updateChecker` » checks for updates.
 - `aliases` » aliases for `/jt` root command (needs **R**estart).
+- `defaultLanguage` » `auto` follows each client, or one forced language.
 - `storage` » SQLite DB (usage stats).
 - `colors` » color palette for messages.
 - `metrics` » anonymous bStats stats (**R**).
