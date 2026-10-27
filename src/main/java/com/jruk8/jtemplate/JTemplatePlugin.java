@@ -1,0 +1,123 @@
+package com.jruk8.jtemplate;
+
+import com.jruk8.jtemplate.command.CommandContext;
+import com.jruk8.jtemplate.command.CommandsRegistrar;
+import com.jruk8.jtemplate.config.ConfigRegistrar;
+import com.jruk8.jtemplate.core.MetricsBootstrap;
+import com.jruk8.jtemplate.core.Reloader;
+import com.jruk8.jtemplate.core.StartupBanner;
+import com.jruk8.jtemplate.message.MessageBootstrap;
+import com.jruk8.jtemplate.message.Messenger;
+import com.jruk8.jtemplate.placeholder.CommandUsageTracker;
+import com.jruk8.jtemplate.placeholder.PlaceholdersBootstrap;
+import com.jruk8.jtemplate.sound.SoundPlayer;
+import com.jruk8.jtemplate.storage.StorageBootstrap;
+import com.jruk8.jtemplate.update.UpdateCheckerBootstrap;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Logger;
+
+public final class JTemplatePlugin extends JavaPlugin {
+
+    private StorageBootstrap storageBootstrap;
+
+    @Override
+    public void onEnable() {
+        // Set up all core modules
+        setupCoreModules();
+    }
+
+    @Override
+    public void onDisable() {
+        if (this.storageBootstrap != null) {
+            this.storageBootstrap.shutdown();
+        }
+    }
+
+    private void setupCoreModules() {
+        var logger = getLogger();
+
+        // Initialize reloader
+        Reloader reloader = new Reloader(logger);
+
+        // Initialize all configs
+        var configRegistrar = new ConfigRegistrar(this);
+        configRegistrar.register();
+        reloader.register(configRegistrar);
+
+        // Initialize messenger
+        var messageRegistrar = new MessageBootstrap(configRegistrar);
+        messageRegistrar.register();
+        var messenger = messageRegistrar.getMessenger();
+
+        // Initialize sound player
+        var soundPlayer = new SoundPlayer(logger);
+
+        // Initialize update checker; the banner prints once the first check lands
+        var updateChecker = new UpdateCheckerBootstrap(
+                this,
+                configRegistrar.getPluginConfig(),
+                messenger,
+                configRegistrar.getMessagesConfig(),
+                logger,
+                this::printBanner
+        );
+        updateChecker.register();
+        reloader.register(updateChecker);
+
+        // Initialize storage and placeholders first: commands record usage stats
+        CommandUsageTracker usageTracker = setupStorageAndPlaceholders(logger, reloader, configRegistrar);
+
+        // Initialize commands
+        setupCommands(reloader, configRegistrar, messenger, soundPlayer, updateChecker, usageTracker);
+
+        // Initialize bStats unless anonymous statistics are disabled
+        boolean metricsEnabled = configRegistrar.getPluginConfig().getMetrics().isEnabled();
+        var metricsBootstrap = new MetricsBootstrap(this, metricsEnabled);
+        metricsBootstrap.register();
+    }
+
+    private void printBanner(boolean updateAvailable) {
+        StartupBanner.print(
+                Bukkit.getConsoleSender()::sendMessage,
+                getName(),
+                getPluginMeta().getVersion(),
+                updateAvailable);
+    }
+
+    private void setupCommands(
+            Reloader reloader,
+            ConfigRegistrar configRegistrar,
+            Messenger messenger,
+            SoundPlayer soundPlayer,
+            UpdateCheckerBootstrap updateChecker,
+            CommandUsageTracker usageTracker
+    ) {
+        var context = new CommandContext(
+                configRegistrar.getMessagesConfig(),
+                configRegistrar.getSoundsConfig(),
+                messenger,
+                soundPlayer
+        );
+        var commandRegistrar = new CommandsRegistrar(
+                getLifecycleManager(), reloader, context, getPluginMeta(),
+                configRegistrar.getPluginConfig(), updateChecker.getService(), usageTracker);
+        commandRegistrar.register();
+    }
+
+    private CommandUsageTracker setupStorageAndPlaceholders(
+            Logger logger, Reloader reloader, ConfigRegistrar configRegistrar) {
+        // Initialize SQLite storage
+        this.storageBootstrap = new StorageBootstrap(configRegistrar.getPluginConfig(), getDataFolder(), logger);
+        this.storageBootstrap.register();
+        reloader.register(this.storageBootstrap);
+        var usageTracker = new CommandUsageTracker(this.storageBootstrap.getStorage());
+
+        // Initialize PlaceholderAPI placeholders
+        var placeholdersBootstrap = new PlaceholdersBootstrap(usageTracker, this, logger);
+        placeholdersBootstrap.register();
+        reloader.register(placeholdersBootstrap);
+        return usageTracker;
+    }
+}
