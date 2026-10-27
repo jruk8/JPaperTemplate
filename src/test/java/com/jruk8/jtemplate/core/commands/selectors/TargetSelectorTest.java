@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -22,6 +23,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyMap;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.mock;
@@ -39,6 +41,12 @@ class TargetSelectorTest {
 
     @Mock
     private PlayerSelectorArgumentResolver selector;
+
+    @Captor
+    private ArgumentCaptor<Function<MessagesConfig, String>> messageCaptor;
+
+    @Captor
+    private ArgumentCaptor<Map<String, String>> tagsCaptor;
 
     private Player player(UUID id) {
         Player player = mock(Player.class);
@@ -63,9 +71,8 @@ class TargetSelectorTest {
         var targets = TargetSelector.fromSelector(source, selector, ctx);
 
         assertTrue(targets.isEmpty());
-        var captor = ArgumentCaptor.forClass(Function.class);
-        verify(ctx).error(eq(source), captor.capture(), any(Map.class));
-        assertEquals("none", selectedMessage(captor.getValue()));
+        verify(ctx).error(eq(source), messageCaptor.capture(), anyMap());
+        assertEquals("none", selectedMessage(messageCaptor.getValue()));
     }
 
     @Test
@@ -76,7 +83,7 @@ class TargetSelectorTest {
         var targets = TargetSelector.fromSelector(source, selector, ctx);
 
         assertTrue(targets.isEmpty());
-        verify(ctx).error(eq(source), any(Function.class), any(Map.class));
+        verify(ctx).error(eq(source), any(), anyMap());
     }
 
     @Test
@@ -102,14 +109,10 @@ class TargetSelectorTest {
         var targets = TargetSelector.fromSelector(source, selector, ctx);
 
         assertTrue(targets.isEmpty());
-        var selectorCaptor = ArgumentCaptor.forClass(Function.class);
-        var tagsCaptor = ArgumentCaptor.forClass(Map.class);
-        verify(ctx).error(eq(source), selectorCaptor.capture(), tagsCaptor.capture());
+        verify(ctx).error(eq(source), messageCaptor.capture(), tagsCaptor.capture());
         assertEquals(TemplatePermissions.OTHER, tagsCaptor.getValue().get("permission"));
-        @SuppressWarnings("unchecked")
-        Function<MessagesConfig, String> fn = (Function<MessagesConfig, String>) selectorCaptor.getValue();
         var messages = new MessagesConfig();
-        assertEquals(messages.getCore().getNoPermission(), fn.apply(messages));
+        assertEquals(messages.getCore().getNoPermission(), messageCaptor.getValue().apply(messages));
     }
 
     @Test
