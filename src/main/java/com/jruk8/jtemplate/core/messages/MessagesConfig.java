@@ -13,8 +13,9 @@ import lombok.Setter;
  * numbers, player names and similar values, {error} for errors. Commands
  * insert runtime values through {bracket} placeholders: {version},
  * {authors}, {time}, {syntax}, {description}, {latest}, {current}, {url},
- * {modrinth-url} and {permission}. Angle brackets are reserved for raw
- * MiniMessage, and \n breaks the line.
+ * {modrinth-url}, {permission}, {modrinth}, {github}, {discord} and
+ * {donate}. Angle brackets are reserved for raw MiniMessage, and \n
+ * breaks the line.
  */
 @Getter
 @Setter
@@ -45,19 +46,12 @@ public class MessagesConfig extends OkaeriConfig {
         @Comment("Version command output (use {version} and {authors})")
         private String versionSuccess = "\n{prefix}{brand}Version {hl}{version}"
                 + "\n{brand}» {hl}Authors: {plain}{authors}"
-                + "\n{brand}» {hl}Links: "
-                + "<click:open_url:'https://modrinth.com/project/jtemplate'>"
-                + "<hover:show_text:'{plain}Open on Modrinth'><#5ae663>Modrinth</hover></click>"
-                + "{plain} | "
-                + "<click:open_url:'https://github.com/jruk8/JPaperTemplate'>"
-                + "<hover:show_text:'{plain}Open on GitHub'><#5a88e6>GitHub</hover></click>"
-                + "{plain} | "
-                + "<click:open_url:'https://ko-fi.com/jruk'>"
-                + "<hover:show_text:'{plain}Support on Ko-fi'><#ff5e5b>Donate</hover></click>";
+                + "\n{brand}» {hl}Links: {modrinth}{plain} | {github}{plain} | {donate}";
 
         @Comment("Update notice (use {latest}, {current}, {url} and {modrinth-url})")
-        private String updateAvailable = "{prefix}{hl}JTemplate {latest} is available"
-                + "{plain} (running {hl}{current}{plain}): {url} / {modrinth-url}";
+        private String updateAvailable = "\\n{prefix}{hl}JTemplate {latest}{brand} is available"
+                + " (running {hl}{current}{brand})."
+                + "\\n{brand}» {hl}Update: {modrinth} {plain}| {github} {plain}| {discord}";
 
         @Comment("Sent when the sender lacks a permission (use {permission})")
         private String noPermission = "{prefix}{error}You do not have the permission "

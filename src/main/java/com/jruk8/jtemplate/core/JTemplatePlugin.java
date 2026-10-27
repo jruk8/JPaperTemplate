@@ -23,8 +23,6 @@ public final class JTemplatePlugin extends JavaPlugin {
     public void onEnable() {
         // Set up all core modules
         setupCoreModules();
-        StartupBanner.print(
-                Bukkit.getConsoleSender()::sendMessage, getName(), getPluginMeta().getVersion());
     }
 
     @Override
@@ -53,13 +51,14 @@ public final class JTemplatePlugin extends JavaPlugin {
         // Initialize sound player
         var soundPlayer = new SoundPlayer(logger);
 
-        // Initialize update checker
+        // Initialize update checker; the banner prints once the first check lands
         var updateChecker = new UpdateCheckerBootstrap(
                 this,
                 configRegistrar.getPluginConfig(),
                 messenger,
                 configRegistrar.getMessagesConfig(),
-                logger
+                logger,
+                this::printBanner
         );
         updateChecker.register();
         reloader.register(updateChecker);
@@ -74,6 +73,14 @@ public final class JTemplatePlugin extends JavaPlugin {
         boolean metricsEnabled = configRegistrar.getPluginConfig().getMetrics().isEnabled();
         var metricsBootstrap = new MetricsBootstrap(this, metricsEnabled);
         metricsBootstrap.register();
+    }
+
+    private void printBanner(boolean updateAvailable) {
+        StartupBanner.print(
+                Bukkit.getConsoleSender()::sendMessage,
+                getName(),
+                getPluginMeta().getVersion(),
+                updateAvailable);
     }
 
     private void setupCommands(

@@ -1,5 +1,7 @@
 package com.jruk8.jtemplate.core.update;
 
+import com.jruk8.jtemplate.core.messages.PluginLinks;
+
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -10,8 +12,6 @@ import java.util.logging.Logger;
  * the main thread.
  */
 public final class UpdateCheckService {
-
-    private static final String MODRINTH_SLUG = "jtemplate";
 
     private final UpdateCheckHttp http;
     private final Logger logger;
@@ -62,11 +62,7 @@ public final class UpdateCheckService {
             return;
         }
         pending = new UpdateAvailable(
-                latest.toString(), current.toString(), release.pageUrl(), modrinthPageUrl());
+                latest.toString(), current.toString(), release.pageUrl(), PluginLinks.MODRINTH_URL);
         logger.info("JTemplate " + latest + " is available (running " + current + "): " + release.pageUrl());
-    }
-
-    private static String modrinthPageUrl() {
-        return "https://modrinth.com/project/" + MODRINTH_SLUG;
     }
 }
