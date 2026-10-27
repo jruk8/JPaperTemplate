@@ -132,9 +132,9 @@ threading rules.
 | --- | --- |
 | `command` | `CommandsRegistrar`, `UserCommandsRegistrar`, `AdminCommandsRegistrar`, `CommandContext`, `Permissions` |
 | `command.selector` | `TargetSelector`, `SelectorSuggestions`, `ValueSuggestions`, `PlayerSelectorArgument` |
-| `command.user` | `HelpCommand`, `HelpEntry`, `VersionCommand`, `AuthorFormatter` |
+| `command.user` | `HelpCommand`, `HelpEntry`, `VersionCommand`, `AuthorFormatter`, `LanguageCommand` |
 | `config` | `ConfigRegistrar`, `PluginConfig` |
-| `message` | `MessageBootstrap`, `Messenger`, `MessageParser` |
+| `message` | `MessageBootstrap`, `Messenger`, `MessageParser`, `MessageBundles`, `Languages`, `PlayerLanguage`, `LanguageStore` |
 | `sound` | `SoundPlayer`, `SoundsConfig` |
 | `placeholder` | `PlaceholdersBootstrap`, `CommandUsageTracker`, `UsageExpansion` |
 | `storage` | `StorageBootstrap`, `SqliteStorage` |

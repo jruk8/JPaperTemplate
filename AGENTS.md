@@ -30,11 +30,11 @@ src/main/java/com/jruk8/jtemplate/
   JTemplatePlugin           composition root only: setupCoreModules() wires the registrars
   core/                     Bootstrap/Reloadable contracts, Reloader, metrics, banner
   command/                  shared plumbing (CommandContext, CommandsRegistrar, Permissions)
-    user/                   /jtemplate help + version (alias /jt)
+    user/                   /jtemplate help + version + language (alias /jt)
     admin/reload/           /jtemplate reload
     selector/               TargetSelector, SelectorSuggestions, ValueSuggestions, PlayerSelectorArgument
   config/                   Okaeri schema (PluginConfig) + ConfigRegistrar loader
-  message/                  MiniMessage parsing (MessageParser) + dispatch (Messenger)
+  message/                  per-player bundles (MessageBundles, Languages) + parsing + dispatch
   sound/                    config-driven playback (SoundPlayer, Adventure API only)
   placeholder/              PlaceholderAPI expansion counting command executions
   storage/                  raw JDBC SQLite key/value counters (jtemplate.db)

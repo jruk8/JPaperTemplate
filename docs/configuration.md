@@ -82,9 +82,66 @@ brackets are raw MiniMessage, and `\n` breaks the line:
 - `core.noPermission` » the sender lacks a permission (use `{permission}`).
 - `core.noTargets` » a target selector matched no players.
 - `core.consoleNeedsTarget` » console ran a command without a target.
+- `core.playerOnly` » console ran a player-only command.
+- `core.linkModrinth` / `core.linkGithub` / `core.linkDiscord` /
+  `core.linkDonate` » link button templates (use `{url}`); the
+  messenger injects them per recipient so labels and tooltips follow
+  the reader's language.
+- `core.versionComma` / `core.versionAnd` » joining words between
+  version authors.
+- `core.languageShow` / `core.languageShowAuto` » the language listing
+  (use `{name}`).
+- `core.languageSet` / `core.languageAuto` » pin set and pin cleared
+  (use `{name}`).
+- `core.languageUnknown` » unknown language input (use `{input}` and
+  `{codes}`).
+- `help.help` / `help.version` / `help.reload` / `help.language` »
+  help menu descriptions per command.
 
 Messages can embed PlaceholderAPI placeholders (`%player_name%`) when
 PlaceholderAPI is installed.
+
+## Languages
+
+Messages are per player, never per server: every recipient reads the
+bundle matching their own language. Without a pin the language follows
+the client's locale live; `/jtemplate language <language>` pins one
+persistently, `/jtemplate language auto` clears the pin, and a bare
+`/jtemplate language` shows the current one. English is the fallback
+everywhere: console, unknown locales, missing files and missing keys
+all read `messages.yml`. Each used language seeds its `lang/<code>.yml`
+from the bundled translation on first use; the files stay
+admin-editable and overlay the English schema, so deleting a key (or a
+whole file) just reads English again.
+
+| Code | Language | Code | Language |
+| --- | --- | --- | --- |
+| `en` | English | `da` | Dansk |
+| `fi` | Suomi | `cs` | Čeština |
+| `de` | Deutsch | `hu` | Magyar |
+| `es` | Español | `vi` | Tiếng Việt |
+| `fr` | Français | `id` | Bahasa Indonesia |
+| `zh_cn` | 简体中文 | `ar` | العربية |
+| `ru` | Русский | `hi` | हिन्दी |
+| `pt_br` | Português | `el` | Ελληνικά |
+| `ja` | 日本語 | `sk` | Slovenčina |
+| `pl` | Polski | `ro` | Română |
+| `tr` | Türkçe | `bg` | Български |
+| `it` | Italiano | `he` | עברית |
+| `ko` | 한국어 | `th` | ไทย |
+| `nl` | Nederlands | `ms` | Bahasa Melayu |
+| `uk` | Українська | `lt` | Lietuvių |
+| `sv` | Svenska | `lv` | Latviešu |
+| `no` | Norsk | `et` | Eesti |
+| `pt_pt` | Português | `hr` | Hrvatski |
+| `zh_tw` | 繁體中文 | `sr` | Српски |
+| `ca` | Català | `bs` | Bosanski |
+| `gl` | Galego | `sl` | Slovenščina |
+| `is` | Íslenska | `mk` | Македонски |
+| `ga` | Gaeilge | `ka` | ქართული |
+| `hy` | Հայերեն | `az` | Azərbaycanca |
+| `kk` | Қазақша | `lol_us` | LOLCAT |
+| `en_pt` | Pirate Speak | `qya_aa` | Quenya |
 
 ## sounds.yml
 

@@ -11,6 +11,7 @@ icon: material/key
 | `jtemplate.reload` | Use `/jtemplate reload`. | OP |
 | `jtemplate.help` | Use `/jtemplate help` (entries are permission-filtered). | Everyone |
 | `jtemplate.version` | Use `/jtemplate version`. | Everyone |
+| `jtemplate.language` | Use `/jtemplate language`. | Everyone |
 
 Permissions are checked on the command nodes with Brigadier `requires()`
 predicates (see `CommandContext.requiresPermission`); the node constants

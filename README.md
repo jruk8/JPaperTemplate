@@ -32,6 +32,8 @@ logic on top.
   completion out of the box.
 - **MiniMessage everywhere** » `{braces}` for plugin placeholders,
   angle brackets reserved for raw MiniMessage, shared color palette.
+- **52 languages** » per-player messages that follow the client locale,
+  pinnable with `/jtemplate language`, English fallback everywhere.
 - **Sounds** » config-driven Adventure sounds per feedback event.
 - **Placeholders** » a PAPI expansion with self/other variants
   (`%jtemplate_uses%`, `%jtemplate_uses_<player>%`).
@@ -51,7 +53,7 @@ logic on top.
 
 | Command | Description |
 | --- | --- |
-| `/jtemplate <help\|version\|reload>` | Help, version, and config reload (alias `/jt`). |
+| `/jtemplate <help\|version\|reload\|language>` | Help, version, config reload, and language (alias `/jt`). |
 
 See the full [Commands Page](https://jruk8.github.io/JPaperTemplate/commands/) for more info.
 
@@ -63,6 +65,7 @@ See the full [Commands Page](https://jruk8.github.io/JPaperTemplate/commands/) f
 | `jtemplate.reload` | Use `/jtemplate reload`. | OP |
 | `jtemplate.help` | Use `/jtemplate help`. | Everyone |
 | `jtemplate.version` | Use `/jtemplate version`. | Everyone |
+| `jtemplate.language` | Use `/jtemplate language`. | Everyone |
 
 ### Config
 
@@ -74,6 +77,8 @@ Find `config.yml`, `messages.yml` and `sounds.yml` in `plugins/JTemplate/`:
 - `colors` » color palette for messages.
 - `metrics` » anonymous bStats stats (**R**).
 - `messages.yml` / `sounds.yml` » messages and sounds.
+- `lang/<code>.yml` » per-language overlays, seeded from the bundled
+  translations on first use (English fallback for missing keys).
 
 See the full [Configuration Page](https://jruk8.github.io/JPaperTemplate/configuration/) for more info.
 

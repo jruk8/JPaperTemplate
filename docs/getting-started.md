@@ -26,6 +26,7 @@ icon: material/rocket-launch
 /jtemplate help
 /jtemplate version
 /jtemplate reload
+/jtemplate language
 ```
 
 `/jt` is a built-in alias for `/jtemplate`. The template placeholders count

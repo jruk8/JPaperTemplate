@@ -24,6 +24,8 @@ framework.
   in-game notices.
 - **Reloadable** -- `/jtemplate reload` re-reads every config and re-opens
   the storage and placeholders.
+- **52 languages** -- per-player messages follow the client locale and pin
+  with `/jtemplate language`; English is the fallback everywhere.
 
 ## Documentation
 
