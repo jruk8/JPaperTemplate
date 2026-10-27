@@ -6,8 +6,11 @@ import com.jruk8.jtemplate.config.ConfigRegistrar;
 import com.jruk8.jtemplate.core.MetricsBootstrap;
 import com.jruk8.jtemplate.core.Reloader;
 import com.jruk8.jtemplate.core.StartupBanner;
+import com.jruk8.jtemplate.message.LanguageStore;
 import com.jruk8.jtemplate.message.MessageBootstrap;
+import com.jruk8.jtemplate.message.MessageBundles;
 import com.jruk8.jtemplate.message.Messenger;
+import com.jruk8.jtemplate.message.PlayerLanguage;
 import com.jruk8.jtemplate.placeholder.CommandUsageTracker;
 import com.jruk8.jtemplate.placeholder.PlaceholdersBootstrap;
 import com.jruk8.jtemplate.sound.SoundPlayer;
@@ -16,6 +19,7 @@ import com.jruk8.jtemplate.update.UpdateCheckerBootstrap;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 public final class JTemplatePlugin extends JavaPlugin {
@@ -46,10 +50,13 @@ public final class JTemplatePlugin extends JavaPlugin {
         configRegistrar.register();
         reloader.register(configRegistrar);
 
-        // Initialize messenger
-        var messageRegistrar = new MessageBootstrap(configRegistrar);
-        messageRegistrar.register();
-        var messenger = messageRegistrar.getMessenger();
+        // Initialize storage first: languages and commands both need it
+        CommandUsageTracker usageTracker = setupStorageAndPlaceholders(logger, reloader, configRegistrar);
+
+        // Initialize per-language message bundles and the messenger
+        var playerLanguage = new PlayerLanguage(new LanguageStore(this.storageBootstrap::getStorage));
+        var bundles = messageBundles(reloader, configRegistrar, playerLanguage, logger);
+        var messenger = messageRegistrar(configRegistrar, bundles).getMessenger();
 
         // Initialize sound player
         var soundPlayer = new SoundPlayer(logger);
@@ -59,18 +66,17 @@ public final class JTemplatePlugin extends JavaPlugin {
                 this,
                 configRegistrar.getPluginConfig(),
                 messenger,
-                configRegistrar.getMessagesConfig(),
+                bundles,
                 logger,
                 this::printBanner
         );
         updateChecker.register();
         reloader.register(updateChecker);
 
-        // Initialize storage and placeholders first: commands record usage stats
-        CommandUsageTracker usageTracker = setupStorageAndPlaceholders(logger, reloader, configRegistrar);
-
         // Initialize commands
-        setupCommands(reloader, configRegistrar, messenger, soundPlayer, updateChecker, usageTracker);
+        setupCommands(
+                reloader, configRegistrar, messenger, soundPlayer, updateChecker, usageTracker,
+                bundles, playerLanguage);
 
         // Initialize bStats unless anonymous statistics are disabled
         boolean metricsEnabled = configRegistrar.getPluginConfig().getMetrics().isEnabled();
@@ -86,23 +92,47 @@ public final class JTemplatePlugin extends JavaPlugin {
                 updateAvailable);
     }
 
+    private MessageBundles messageBundles(
+            Reloader reloader,
+            ConfigRegistrar configRegistrar,
+            PlayerLanguage playerLanguage,
+            Logger logger) {
+        var bundles = new MessageBundles(
+                configRegistrar.getMessagesConfig(),
+                playerLanguage::get,
+                new File(getDataFolder(), "lang"),
+                logger);
+        reloader.register(bundles);
+        return bundles;
+    }
+
+    private MessageBootstrap messageRegistrar(ConfigRegistrar configRegistrar, MessageBundles bundles) {
+        var messageRegistrar = new MessageBootstrap(configRegistrar, bundles);
+        messageRegistrar.register();
+        return messageRegistrar;
+    }
+
     private void setupCommands(
             Reloader reloader,
             ConfigRegistrar configRegistrar,
             Messenger messenger,
             SoundPlayer soundPlayer,
             UpdateCheckerBootstrap updateChecker,
-            CommandUsageTracker usageTracker
+            CommandUsageTracker usageTracker,
+            MessageBundles bundles,
+            PlayerLanguage playerLanguage
     ) {
         var context = new CommandContext(
                 configRegistrar.getMessagesConfig(),
                 configRegistrar.getSoundsConfig(),
                 messenger,
-                soundPlayer
+                soundPlayer,
+                bundles
         );
         var commandRegistrar = new CommandsRegistrar(
                 getLifecycleManager(), reloader, context, getPluginMeta(),
-                configRegistrar.getPluginConfig(), updateChecker.getService(), usageTracker);
+                configRegistrar.getPluginConfig(), updateChecker.getService(), usageTracker,
+                playerLanguage);
         commandRegistrar.register();
     }
 

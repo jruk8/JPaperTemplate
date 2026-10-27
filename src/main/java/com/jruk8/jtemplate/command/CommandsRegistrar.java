@@ -6,6 +6,7 @@ import com.jruk8.jtemplate.command.admin.AdminCommandsRegistrar;
 import com.jruk8.jtemplate.command.user.UserCommandsRegistrar;
 import com.jruk8.jtemplate.command.user.help.HelpCommand;
 import com.jruk8.jtemplate.config.PluginConfig;
+import com.jruk8.jtemplate.message.PlayerLanguage;
 import com.jruk8.jtemplate.placeholder.CommandUsageTracker;
 import com.jruk8.jtemplate.update.UpdateCheckService;
 import com.mojang.brigadier.Command;
@@ -34,6 +35,7 @@ public class CommandsRegistrar implements Bootstrap {
     private final PluginConfig pluginConfig;
     private final UpdateCheckService updateChecks;
     private final CommandUsageTracker usageTracker;
+    private final PlayerLanguage playerLanguage;
 
     public CommandsRegistrar(LifecycleEventManager<Plugin> lifecycle,
                              Reloader reloader,
@@ -41,7 +43,8 @@ public class CommandsRegistrar implements Bootstrap {
                              PluginMeta pluginMeta,
                              PluginConfig pluginConfig,
                              UpdateCheckService updateChecks,
-                             CommandUsageTracker usageTracker) {
+                             CommandUsageTracker usageTracker,
+                             PlayerLanguage playerLanguage) {
         this.lifecycle = lifecycle;
         this.reloader = reloader;
         this.commandContext = commandContext;
@@ -49,6 +52,7 @@ public class CommandsRegistrar implements Bootstrap {
         this.pluginConfig = pluginConfig;
         this.updateChecks = updateChecks;
         this.usageTracker = usageTracker;
+        this.playerLanguage = playerLanguage;
     }
 
     @Override
@@ -66,7 +70,8 @@ public class CommandsRegistrar implements Bootstrap {
                 help.showHelp(context.getSource(), null);
                 return Command.SINGLE_SUCCESS;
             });
-            new UserCommandsRegistrar(root, commandContext, pluginMeta, updateChecks, usageTracker, help).register();
+            new UserCommandsRegistrar(
+                    root, commandContext, pluginMeta, updateChecks, usageTracker, help, playerLanguage).register();
             new AdminCommandsRegistrar(root, commandContext, reloader, pluginConfig).register();
             event.registrar().register(root.build(), "JTemplate commands", hubAliases);
         });

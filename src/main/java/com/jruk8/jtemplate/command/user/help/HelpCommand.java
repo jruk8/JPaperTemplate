@@ -2,6 +2,7 @@ package com.jruk8.jtemplate.command.user.help;
 
 import com.jruk8.jtemplate.command.CommandContext;
 import com.jruk8.jtemplate.command.Permissions;
+import com.jruk8.jtemplate.message.MessagesConfig;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -56,7 +57,7 @@ public class HelpCommand {
     public void showHelp(CommandSourceStack sender, String query) {
         ctx.playHelp(sender);
         ctx.sendMessage(sender, m -> m.getCore().getHelpHeader(), Map.of("version", version));
-        HelpEntry.matching(entries(), query).stream()
+        HelpEntry.matching(entries(ctx.messagesFor(sender.getSender()).getHelp()), query).stream()
                 .filter(entry -> entry.visibleTo(sender.getSender()))
                 .forEach(entry -> ctx.sendMessage(
                         sender,
@@ -65,10 +66,11 @@ public class HelpCommand {
                 ));
     }
 
-    private List<HelpEntry> entries() {
+    private List<HelpEntry> entries(MessagesConfig.Help help) {
         return List.of(
-                new HelpEntry("/jt help [query]", "Shows this help menu."),
-                new HelpEntry("/jt version", "Shows the plugin version.", Permissions.VERSION),
-                new HelpEntry("/jt reload", "Reloads the plugin configuration.", Permissions.RELOAD));
+                new HelpEntry("/jt help [query]", help.getHelp()),
+                new HelpEntry("/jt version", help.getVersion(), Permissions.VERSION),
+                new HelpEntry("/jt reload", help.getReload(), Permissions.RELOAD),
+                new HelpEntry("/jt language [language|auto]", help.getLanguage(), Permissions.LANGUAGE));
     }
 }
