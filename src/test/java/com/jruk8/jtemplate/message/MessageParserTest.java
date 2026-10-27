@@ -84,18 +84,14 @@ class MessageParserTest {
     class LinkButtonTests {
 
         @Test
-        @DisplayName("should replace link placeholders with clickable buttons")
-        void shouldReplaceLinkPlaceholders() {
+        @DisplayName("should leave link placeholders for the messenger to inject")
+        void shouldLeaveLinkPlaceholders() {
             Component result = parser.parse("{modrinth} {github} {discord} {donate}", Map.of());
             String plain = PLAIN_TEXT.serialize(result);
-            assertTrue(plain.contains("Modrinth"));
-            assertTrue(plain.contains("GitHub"));
-            assertTrue(plain.contains("Discord"));
-            assertTrue(plain.contains("Donate"));
-            String serialized = MINI_MESSAGE.serialize(result);
-            assertTrue(serialized.contains("modrinth.com/project/jtemplate"));
-            assertTrue(serialized.contains("discord.com/invite/hkWmCVmWDC"));
-            assertTrue(serialized.contains("#6258f2"));
+            assertTrue(plain.contains("{modrinth}"));
+            assertTrue(plain.contains("{github}"));
+            assertTrue(plain.contains("{discord}"));
+            assertTrue(plain.contains("{donate}"));
         }
     }
 
